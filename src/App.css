@@ -1,38 +1,76 @@
 .App {
-  text-align: center;
+	padding: 2rem;
+	margin: 0 auto;
+	font-size: 1.6em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+	display: flex;
+	justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav {
+	display: flex;
+	list-style: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.nav li {
+	padding: 0.2rem;
 }
 
-.App-link {
-  color: #61dafb;
+.timingContainer {
+	justify-content: center;
+	margin-top: 8rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.timingList {
+	max-width: 40%;
+	margin: 0 auto;
+	list-style: none;
+	counter-reset: timingList;
+}
+
+ol > li:before {
+	counter-increment: timingList;
+	content: "" counter(timingList) ": ";
+}
+
+.timingListRow {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+	text-align: justify;
+}
+
+.timingBoxes {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	grid-gap: 1rem;
+	margin-top: 3rem;
+}
+
+.timingBox {
+	border: 2px solid black;
+	border-radius: 0.2rem;
+	padding: 0.4em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-weight: bold;
+}
+
+h2 {
+	text-align: center;
+	margin: 1em;
+}
+
+.timingBox-header {
+	background-color: rgba(128, 128, 128, 0.252);
+	box-shadow: -2px 3px 10px rgba(128, 128, 128, 0.65);
+	width: fit-content;
+	border-radius: 50%;
+	padding: 0.2em;
+}
+
+.timingBox-content {
+	text-align: center;
 }
