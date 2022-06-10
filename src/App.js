@@ -2,16 +2,25 @@ import "./App.css"
 import { useEffect, useState } from "react"
 
 function App() {
-	const [driversList, setDriversList] = useState()
-	const [Q1, setQ1] = useState()
-	const [Q2, setQ2] = useState()
-	const [Q3, setQ3] = useState()
+	// const [driversList, setDriversList] = useState()
+	const [DriverQualifyingResults, setDriverQualifyingResults] = useState()
 	const [raceWeekendData, setRaceWeekendData] = useState()
 
 	const setQualyTimes = (result) => {
-		result.Q1 !== undefined ? setQ1(result.Q1) : setQ1("No Time Recorded")
-		result.Q2 !== undefined ? setQ2(result.Q2) : setQ2("No Time Recorded")
-		result.Q3 !== undefined ? setQ3(result.Q3) : setQ3("No Time Recorded")
+		let Q1, Q2, Q3
+
+		result.Q1 !== undefined ? (Q1 = result.Q1) : (Q1 = "No Time Recorded")
+		result.Q2 !== undefined ? (Q2 = result.Q2) : (Q2 = "No Time Recorded")
+		result.Q3 !== undefined ? (Q3 = result.Q3) : (Q3 = "No Time Recorded")
+
+		setDriverQualifyingResults((prevResults) => {
+			return {
+				...prevResults,
+				Q1,
+				Q2,
+				Q3,
+			}
+		})
 	}
 
 	useEffect(() => {
@@ -20,12 +29,6 @@ function App() {
 			.then((data) => {
 				let { raceName, round, season, date, Circuit, QualifyingResults } =
 					data.MRData.RaceTable.Races[0]
-				//Checks Data
-				// console.log("RaceName: " + raceName)
-				// console.log("round: " + round)
-				// console.log("season: " + season)
-				// console.log("date: " + date)
-				// console.log(Circuit)
 
 				let formattedRaceWeekendData = {
 					round,
@@ -35,22 +38,17 @@ function App() {
 					Circuit,
 					QualifyingResults,
 				}
-				setRaceWeekendData(formattedRaceWeekendData)
 
-				// //Print / Render Qualifying Results
-				// QualifyingResults.forEach((position) => {
-				// 	// console.log(position.Driver)
-				// 	let qualifyingResults = [position.Driver]
-				// })
+				setRaceWeekendData(formattedRaceWeekendData)
 			})
 
 		//Get list of drivers
-		fetch("https://ergast.com/api/f1/current/drivers.json")
-			.then((res) => res.json())
-			.then((data) => {
-				let currentDrivers = data.MRData.DriverTable.Drivers
-				setDriversList(currentDrivers)
-			})
+		// fetch("https://ergast.com/api/f1/current/drivers.json")
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		let currentDrivers = data.MRData.DriverTable.Drivers
+		// 		setDriversList(currentDrivers)
+		// 	})
 	}, [])
 	return (
 		<div className='App'>
@@ -84,27 +82,32 @@ function App() {
 										onClick={() => setQualyTimes(result)}
 										result={result}>
 										<div>{driverFullName}</div>
-										{/* <div> */}
 										<div>{result.Q3}</div>
-										{/* </div> */}
 										<div>{result.Constructor.name}</div>
 									</li>
 								)
 							})}
 					</ol>
 				</div>
+
 				<div className='timingBoxes'>
 					<div className='timingBox'>
 						<div className='timingBox-header'>Q1</div>
-						<div className='timingBox-content'>{Q1}</div>
+						<div className='timingBox-content'>
+							{DriverQualifyingResults && DriverQualifyingResults.Q1}
+						</div>
 					</div>
 					<div className='timingBox'>
 						<div className='timingBox-header'>Q2</div>
-						<div className='timingBox-content'>{Q2}</div>
+						<div className='timingBox-content'>
+							{DriverQualifyingResults && DriverQualifyingResults.Q2}
+						</div>
 					</div>
 					<div className='timingBox'>
 						<div className='timingBox-header'>Q3</div>
-						<div className='timingBox-content'>{Q3}</div>
+						<div className='timingBox-content'>
+							{DriverQualifyingResults && DriverQualifyingResults.Q3}
+						</div>
 					</div>
 				</div>
 			</div>
