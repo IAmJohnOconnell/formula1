@@ -1,10 +1,15 @@
 import "./App.css"
 import { useEffect, useState } from "react"
+import Nav from "./components/Nav"
+import TimingBox from "./components/TimingBox"
+import TimeSheet from "./components/TimeSheet"
 
 function App() {
 	// const [driversList, setDriversList] = useState()
 	const [DriverQualifyingResults, setDriverQualifyingResults] = useState()
 	const [raceWeekendData, setRaceWeekendData] = useState()
+	const [sessionChoice, setSessionChoice] = useState("qualifying")
+	let url = `https://ergast.com/api/f1/current/last/${sessionChoice}.json`
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -23,11 +28,15 @@ function App() {
 		})
 	}
 
+	const handleSessionChange = (e) => {
+		setSessionChoice(e.target.value)
+	}
+
 	useEffect(() => {
-		fetch("https://ergast.com/api/f1/current/last/qualifying.json")
+		fetch(`http://ergast.com/api/f1/current/last/${sessionChoice}.json`)
 			.then((res) => res.json())
 			.then((data) => {
-				let { raceName, round, season, date, Circuit, QualifyingResults } =
+				let { round, season, raceName, date, Circuit } =
 					data.MRData.RaceTable.Races[0]
 
 				let formattedRaceWeekendData = {
@@ -36,8 +45,23 @@ function App() {
 					raceName,
 					date,
 					Circuit,
-					QualifyingResults,
 				}
+
+				if (data.MRData.RaceTable.Races[0].QualifyingResults !== undefined) {
+					formattedRaceWeekendData = {
+						...formattedRaceWeekendData,
+						Results: data.MRData.RaceTable.Races[0].QualifyingResults,
+					}
+				}
+
+				if (data.MRData.RaceTable.Races[0].Results !== undefined) {
+					formattedRaceWeekendData = {
+						...formattedRaceWeekendData,
+						Results: data.MRData.RaceTable.Races[0].Results,
+					}
+				}
+
+				console.log(formattedRaceWeekendData)
 
 				setRaceWeekendData(formattedRaceWeekendData)
 			})
@@ -49,7 +73,7 @@ function App() {
 		// 		let currentDrivers = data.MRData.DriverTable.Drivers
 		// 		setDriversList(currentDrivers)
 		// 	})
-	}, [])
+	}, [sessionChoice])
 	return (
 		<div className='App'>
 			<div className='header'>
@@ -60,55 +84,49 @@ function App() {
 						and Done
 					</h1>
 				</div>
-				<nav className='nav'>
-					<li>Home</li>
-					<li>Next</li>
-					<li>Last</li>
-				</nav>
+				<Nav />
 			</div>
+
 			<div className='timingContainer'>
 				<h2>
 					It's About <i>Time</i>
 				</h2>
-				<div className='timingList'>
-					<ol>
-						{raceWeekendData &&
-							raceWeekendData.QualifyingResults.map((result) => {
-								let driverFullName = `${result.Driver.givenName} ${result.Driver.familyName}`
-								return (
-									<li
-										className='timingListRow'
-										key={result.position}
-										onClick={() => setQualyTimes(result)}
-										result={result}>
-										<div>{driverFullName}</div>
-										<div>{result.Q3}</div>
-										<div>{result.Constructor.name}</div>
-									</li>
-								)
-							})}
-					</ol>
+
+				<div>
+					<select
+						onChange={(e) => {
+							handleSessionChange(e)
+						}}>
+						<option value={"qualifying"}>Qualifying</option>
+						<option value={"results"}>Race</option>
+					</select>
 				</div>
 
+				<TimeSheet
+					results={raceWeekendData && raceWeekendData.Results}
+					session={sessionChoice}
+					setQualyTimes={setQualyTimes}
+				/>
+
 				<div className='timingBoxes'>
-					<div className='timingBox'>
-						<div className='timingBox-header'>Q1</div>
-						<div className='timingBox-content'>
-							{DriverQualifyingResults && DriverQualifyingResults.Q1}
-						</div>
-					</div>
-					<div className='timingBox'>
-						<div className='timingBox-header'>Q2</div>
-						<div className='timingBox-content'>
-							{DriverQualifyingResults && DriverQualifyingResults.Q2}
-						</div>
-					</div>
-					<div className='timingBox'>
-						<div className='timingBox-header'>Q3</div>
-						<div className='timingBox-content'>
-							{DriverQualifyingResults && DriverQualifyingResults.Q3}
-						</div>
-					</div>
+					<TimingBox
+						DriverQualifyingResults={
+							DriverQualifyingResults && DriverQualifyingResults.Q1
+						}
+						session={"Q1"}
+					/>
+					<TimingBox
+						DriverQualifyingResults={
+							DriverQualifyingResults && DriverQualifyingResults.Q2
+						}
+						session={"Q2"}
+					/>
+					<TimingBox
+						DriverQualifyingResults={
+							DriverQualifyingResults && DriverQualifyingResults.Q3
+						}
+						session={"Q3"}
+					/>
 				</div>
 			</div>
 		</div>
