@@ -8,8 +8,9 @@ function App() {
 	// const [driversList, setDriversList] = useState()
 	const [DriverQualifyingResults, setDriverQualifyingResults] = useState()
 	const [raceWeekendData, setRaceWeekendData] = useState()
-	const [sessionChoice, setSessionChoice] = useState("qualifying")
-	let url = `https://ergast.com/api/f1/current/last/${sessionChoice}.json`
+	const [selectedSession, setSelectedSession] = useState("qualifying")
+	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
+	const [races, setRaces] = useState()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -28,12 +29,22 @@ function App() {
 		})
 	}
 
-	const handleSessionChange = (e) => {
-		setSessionChoice(e.target.value)
+	const handleSelectedSessionChange = (e) => {
+		setSelectedSession(e.target.value)
+	}
+	const handleSelectedRaceWeekendChange = (e) => {
+		if (raceWeekendData.raceName === selectedRaceWeekend) {
+			setSelectedRaceWeekend(selectedRaceWeekend)
+		} else {
+			setSelectedRaceWeekend(e.target.value)
+		}
 	}
 
 	useEffect(() => {
-		fetch(`http://ergast.com/api/f1/current/last/${sessionChoice}.json`)
+		//Get Selected Race
+		fetch(
+			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/${selectedSession}.json`
+		)
 			.then((res) => res.json())
 			.then((data) => {
 				let { round, season, raceName, date, Circuit } =
@@ -66,6 +77,14 @@ function App() {
 				setRaceWeekendData(formattedRaceWeekendData)
 			})
 
+		//Get All Races
+		fetch(`http://ergast.com/api/f1/current.json`)
+			.then((res) => res.json())
+			.then((data) => {
+				let racesResults = data.MRData.RaceTable.Races.map((race) => race)
+				setRaces(racesResults)
+			})
+
 		//Get list of drivers
 		// fetch("https://ergast.com/api/f1/current/drivers.json")
 		// 	.then((res) => res.json())
@@ -73,7 +92,8 @@ function App() {
 		// 		let currentDrivers = data.MRData.DriverTable.Drivers
 		// 		setDriversList(currentDrivers)
 		// 	})
-	}, [sessionChoice])
+	}, [selectedSession, selectedRaceWeekend])
+
 	return (
 		<div className='App'>
 			<div className='header'>
@@ -95,16 +115,30 @@ function App() {
 				<div>
 					<select
 						onChange={(e) => {
-							handleSessionChange(e)
+							handleSelectedSessionChange(e)
 						}}>
 						<option value={"qualifying"}>Qualifying</option>
 						<option value={"results"}>Race</option>
+					</select>
+
+					<select
+						onChange={(e) => {
+							handleSelectedRaceWeekendChange(e)
+						}}>
+						{races &&
+							races.map((race) => {
+								return (
+									<option key={race.round} value={race.round}>
+										{race.raceName}
+									</option>
+								)
+							})}
 					</select>
 				</div>
 
 				<TimeSheet
 					results={raceWeekendData && raceWeekendData.Results}
-					session={sessionChoice}
+					session={selectedSession}
 					setQualyTimes={setQualyTimes}
 				/>
 
