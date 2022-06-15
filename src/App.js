@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Nav from "./components/Nav"
 import TimingBox from "./components/TimingBox"
 import TimeSheet from "./components/TimeSheet"
+import Standings from "./components/Standings"
 
 function App() {
 	// const [driversList, setDriversList] = useState()
@@ -11,6 +12,7 @@ function App() {
 	const [selectedSession, setSelectedSession] = useState("qualifying")
 	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
 	const [races, setRaces] = useState()
+	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -46,6 +48,16 @@ function App() {
 	}
 
 	useEffect(() => {
+		//Get All Races - for dropdowns
+		fetch(`http://ergast.com/api/f1/current.json`)
+			.then((res) => res.json())
+			.then((data) => {
+				let racesResults = data.MRData.RaceTable.Races.map((race) => race)
+				setRaces(racesResults)
+			})
+	}, [])
+
+	useEffect(() => {
 		//Get Selected Race
 		fetch(
 			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/${selectedSession}.json`
@@ -77,27 +89,30 @@ function App() {
 					}
 				}
 
-				console.log(formattedRaceWeekendData)
+				// console.log(formattedRaceWeekendData)
 
 				setRaceWeekendData(formattedRaceWeekendData)
 			})
 
-		//Get All Races
-		fetch(`http://ergast.com/api/f1/current.json`)
+		fetch(
+			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/driverStandings.json`
+		)
 			.then((res) => res.json())
 			.then((data) => {
-				let racesResults = data.MRData.RaceTable.Races.map((race) => race)
-				setRaces(racesResults)
+				let postRaceDriverStandingsResults =
+					data.MRData.StandingsTable.StandingsLists[0].DriverStandings
+				// console.log(postRaceDriverStandingsResults)
+				setPostRaceDriverStandings(postRaceDriverStandingsResults)
 			})
-
-		//Get list of drivers
-		// fetch("https://ergast.com/api/f1/current/drivers.json")
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		let currentDrivers = data.MRData.DriverTable.Drivers
-		// 		setDriversList(currentDrivers)
-		// 	})
 	}, [selectedSession, selectedRaceWeekend])
+
+	//Get list of drivers
+	// fetch("https://ergast.com/api/f1/current/drivers.json")
+	// 	.then((res) => res.json())
+	// 	.then((data) => {
+	// 		let currentDrivers = data.MRData.DriverTable.Drivers
+	// 		setDriversList(currentDrivers)
+	// 	})
 
 	return (
 		<div className='App'>
@@ -129,7 +144,11 @@ function App() {
 					<select
 						onChange={(e) => {
 							handleSelectedRaceWeekendChange(e)
-						}}>
+						}}
+						defaultValue={""}>
+						<option value='' disabled>
+							Select a Race
+						</option>
 						{races &&
 							races.map((race) => {
 								return (
@@ -141,11 +160,19 @@ function App() {
 					</select>
 				</div>
 
-				<div className='raceNameText'>
+				<div className='raceNameTextContainer'>
 					<h3>
 						{raceWeekendData && raceWeekendData.raceName} -
-						<span className='sessionText'> {selectedSession}</span>
+						<span className='sessionText'>
+							{" "}
+							{selectedSession === "results"
+								? `Race ${selectedSession}`
+								: `${selectedSession} Results`}
+						</span>
 					</h3>
+					{selectedSession !== "qualifying" ? (
+						<h3>World Drivers Championship Standings</h3>
+					) : null}
 				</div>
 
 				<div className='timingContainer'>
@@ -154,27 +181,30 @@ function App() {
 						session={selectedSession}
 						setQualyTimes={setQualyTimes}
 					/>
-
-					<div className='timingBoxes'>
-						<TimingBox
-							DriverQualifyingResults={
-								DriverQualifyingResults && DriverQualifyingResults.Q1
-							}
-							session={"Q1"}
-						/>
-						<TimingBox
-							DriverQualifyingResults={
-								DriverQualifyingResults && DriverQualifyingResults.Q2
-							}
-							session={"Q2"}
-						/>
-						<TimingBox
-							DriverQualifyingResults={
-								DriverQualifyingResults && DriverQualifyingResults.Q3
-							}
-							session={"Q3"}
-						/>
-					</div>
+					{selectedSession === "qualifying" ? (
+						<div className='timingBoxes'>
+							<TimingBox
+								DriverQualifyingResults={
+									DriverQualifyingResults && DriverQualifyingResults.Q1
+								}
+								session={"Q1"}
+							/>
+							<TimingBox
+								DriverQualifyingResults={
+									DriverQualifyingResults && DriverQualifyingResults.Q2
+								}
+								session={"Q2"}
+							/>
+							<TimingBox
+								DriverQualifyingResults={
+									DriverQualifyingResults && DriverQualifyingResults.Q3
+								}
+								session={"Q3"}
+							/>
+						</div>
+					) : (
+						<Standings postRaceDriverStandings={postRaceDriverStandings} />
+					)}
 				</div>
 			</div>
 		</div>
