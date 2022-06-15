@@ -18,16 +18,31 @@
 	padding: 0.2rem;
 }
 
-.timingContainer {
-	justify-content: center;
-	margin-top: 8rem;
+.controls {
+	display: flex;
+	gap: 1em;
 }
 
-.timingList {
-	max-width: 40%;
-	margin: 0 auto;
+.raceNameText {
+	margin: 1rem auto;
+}
+
+.sessionText {
+	text-transform: capitalize;
+}
+
+.timingContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+	margin-top: 1rem;
+}
+
+.timingList > ol {
 	list-style: none;
 	counter-reset: timingList;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3em;
 }
 
 ol > li:before {
@@ -37,15 +52,17 @@ ol > li:before {
 
 .timingListRow {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+	justify-content: space-between;
+	align-items: flex-end;
+	grid-template-columns: repeat(4, minmax(10rem, 1fr));
 	text-align: justify;
+	cursor: pointer;
 }
 
 .timingBoxes {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	grid-template-columns: repeat(3, minmax(5em, 1fr));
 	grid-gap: 1rem;
-	margin-top: 3rem;
 }
 
 .timingBox {
@@ -56,6 +73,7 @@ ol > li:before {
 	flex-direction: column;
 	justify-content: space-between;
 	font-weight: bold;
+	height: fit-content;
 }
 
 h2 {

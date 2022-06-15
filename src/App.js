@@ -32,11 +32,16 @@ function App() {
 	const handleSelectedSessionChange = (e) => {
 		setSelectedSession(e.target.value)
 	}
+
 	const handleSelectedRaceWeekendChange = (e) => {
-		if (raceWeekendData.raceName === selectedRaceWeekend) {
-			setSelectedRaceWeekend(selectedRaceWeekend)
+		if (raceWeekendData.round === selectedRaceWeekend) {
+			console.log("selected race weeked" + selectedRaceWeekend)
+			setSelectedRaceWeekend(raceWeekendData.raceName)
+
+			console.log(raceWeekendData.raceName)
 		} else {
 			setSelectedRaceWeekend(e.target.value)
+			console.log(e.target.value)
 		}
 	}
 
@@ -107,12 +112,12 @@ function App() {
 				<Nav />
 			</div>
 
-			<div className='timingContainer'>
-				<h2>
-					It's About <i>Time</i>
-				</h2>
+			<h2>
+				It's About <i>Time</i>
+			</h2>
 
-				<div>
+			<div className='mainContainer'>
+				<div className='controls'>
 					<select
 						onChange={(e) => {
 							handleSelectedSessionChange(e)
@@ -136,31 +141,40 @@ function App() {
 					</select>
 				</div>
 
-				<TimeSheet
-					results={raceWeekendData && raceWeekendData.Results}
-					session={selectedSession}
-					setQualyTimes={setQualyTimes}
-				/>
+				<div className='raceNameText'>
+					<h3>
+						{raceWeekendData && raceWeekendData.raceName} -
+						<span className='sessionText'> {selectedSession}</span>
+					</h3>
+				</div>
 
-				<div className='timingBoxes'>
-					<TimingBox
-						DriverQualifyingResults={
-							DriverQualifyingResults && DriverQualifyingResults.Q1
-						}
-						session={"Q1"}
+				<div className='timingContainer'>
+					<TimeSheet
+						results={raceWeekendData && raceWeekendData.Results}
+						session={selectedSession}
+						setQualyTimes={setQualyTimes}
 					/>
-					<TimingBox
-						DriverQualifyingResults={
-							DriverQualifyingResults && DriverQualifyingResults.Q2
-						}
-						session={"Q2"}
-					/>
-					<TimingBox
-						DriverQualifyingResults={
-							DriverQualifyingResults && DriverQualifyingResults.Q3
-						}
-						session={"Q3"}
-					/>
+
+					<div className='timingBoxes'>
+						<TimingBox
+							DriverQualifyingResults={
+								DriverQualifyingResults && DriverQualifyingResults.Q1
+							}
+							session={"Q1"}
+						/>
+						<TimingBox
+							DriverQualifyingResults={
+								DriverQualifyingResults && DriverQualifyingResults.Q2
+							}
+							session={"Q2"}
+						/>
+						<TimingBox
+							DriverQualifyingResults={
+								DriverQualifyingResults && DriverQualifyingResults.Q3
+							}
+							session={"Q3"}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
