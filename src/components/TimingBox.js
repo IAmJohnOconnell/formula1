@@ -5,7 +5,9 @@ const TimingBox = ({ DriverQualifyingResults, session }) => {
 		<div className='timingBox'>
 			<div className='timingBox-header'>{session}</div>
 			<div className='timingBox-content'>
-				{DriverQualifyingResults && DriverQualifyingResults}
+				{DriverQualifyingResults
+					? DriverQualifyingResults
+					: "Click a driver to view times"}
 			</div>
 		</div>
 	)

@@ -1,27 +1,43 @@
 import React from "react"
 
-const Standings = ({ postRaceDriverStandings }) => {
+const Standings = ({
+	postRaceDriverStandings,
+	results,
+	selectedRaceWeekend,
+}) => {
 	return (
 		<div className='timingList'>
-			<ol>
-				{postRaceDriverStandings &&
-					postRaceDriverStandings.map((result) => {
-						// let driverFullName = `${result.Driver.givenName} ${result.Driver.familyName}`
-						return (
-							<li
-								className='timingListRow'
-								key={result.position}
-								// onClick={() => setQualyTimes(result)}
-								result={result}>
-								{/* <div>{driverFullName}</div> */}
-								<div>
-									{result.Driver.givenName} {result.Driver.familyName}
-								</div>
-								<div>{result.points}</div>
-							</li>
-						)
-					})}
-			</ol>
+			<div className='race-session-header'>
+				<h3>
+					{results &&
+						`Round ${selectedRaceWeekend} World Drivers Championship Standings`}
+				</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Pos</th>
+						<th>Driver</th>
+						<th>Points</th>
+						<th>Constructor</th>
+					</tr>
+				</thead>
+				<tbody>
+					{postRaceDriverStandings &&
+						postRaceDriverStandings.map((result) => {
+							return (
+								<tr className='timingListRow' key={result.position}>
+									<td>{result.position}</td>
+									<td>
+										{result.Driver.givenName} {result.Driver.familyName}
+									</td>
+									<td>{result.points}</td>
+									<td>{result.Constructors[0].name}</td>
+								</tr>
+							)
+						})}
+				</tbody>
+			</table>
 		</div>
 	)
 }

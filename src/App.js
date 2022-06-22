@@ -2,7 +2,8 @@ import "./App.css"
 import { useEffect, useState } from "react"
 import Nav from "./components/Nav"
 import TimingBox from "./components/TimingBox"
-import TimeSheet from "./components/TimeSheet"
+import RaceTimeSheet from "./components/RaceTimeSheet"
+import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
 import Standings from "./components/Standings"
 
 function App() {
@@ -127,62 +128,70 @@ function App() {
 				<Nav />
 			</div>
 
-			<h2>
+			<h2 id='aboutTime'>
 				It's About <i>Time</i>
 			</h2>
 
-			<div className='mainContainer'>
-				<div className='controls'>
-					<select
-						onChange={(e) => {
-							handleSelectedSessionChange(e)
-						}}>
-						<option value={"qualifying"}>Qualifying</option>
-						<option value={"results"}>Race</option>
-					</select>
+			<div className='controls'>
+				<select
+					onChange={(e) => {
+						handleSelectedSessionChange(e)
+					}}>
+					<option value={"qualifying"}>Qualifying</option>
+					<option value={"results"}>Race</option>
+					<option value={"standings"}>Standings</option>
+				</select>
 
-					<select
-						onChange={(e) => {
-							handleSelectedRaceWeekendChange(e)
-						}}
-						defaultValue={""}>
-						<option value='' disabled>
-							Select a Race
-						</option>
-						{races &&
-							races.map((race) => {
-								return (
-									<option key={race.round} value={race.round}>
-										{race.raceName}
-									</option>
-								)
-							})}
-					</select>
-				</div>
+				<select
+					onChange={(e) => {
+						handleSelectedRaceWeekendChange(e)
+					}}
+					defaultValue={""}>
+					<option value='' disabled>
+						Select a Race
+					</option>
+					{races &&
+						races.map((race) => {
+							return (
+								<option key={race.round} value={race.round}>
+									{race.raceName}
+								</option>
+							)
+						})}
+				</select>
+			</div>
 
-				<div className='raceNameTextContainer'>
-					<h3>
-						{raceWeekendData && raceWeekendData.raceName} -
-						<span className='sessionText'>
-							{" "}
-							{selectedSession === "results"
-								? `Race ${selectedSession}`
-								: `${selectedSession} Results`}
-						</span>
-					</h3>
-					{selectedSession !== "qualifying" ? (
-						<h3>World Drivers Championship Standings</h3>
-					) : null}
-				</div>
+			<div className='timesheetContainer'>
+				<div className='timingWrapper'>
+					{selectedSession === "results" && (
+						<RaceTimeSheet
+							results={raceWeekendData && raceWeekendData}
+							session={selectedSession}
+						/>
+					)}
 
-				<div className='timingContainer'>
-					<TimeSheet
-						results={raceWeekendData && raceWeekendData.Results}
-						session={selectedSession}
-						setQualyTimes={setQualyTimes}
-					/>
+					{selectedSession === "qualifying" && (
+						<QualifyingTimeSheet
+							results={raceWeekendData && raceWeekendData}
+							session={selectedSession}
+							setQualyTimes={setQualyTimes}
+						/>
+					)}
+
+					{selectedSession === "standings" && (
+						<Standings
+							results={raceWeekendData && raceWeekendData}
+							session={selectedSession}
+							selectedRaceWeekend={selectedRaceWeekend}
+							postRaceDriverStandings={postRaceDriverStandings}
+						/>
+					)}
+
 					{selectedSession === "qualifying" ? (
 						<div className='timingBoxes'>
+							<div className='session-results-header'>
+								<h3>Session Results</h3>
+							</div>
 							<TimingBox
 								DriverQualifyingResults={
 									DriverQualifyingResults && DriverQualifyingResults.Q1
@@ -202,9 +211,7 @@ function App() {
 								session={"Q3"}
 							/>
 						</div>
-					) : (
-						<Standings postRaceDriverStandings={postRaceDriverStandings} />
-					)}
+					) : null}
 				</div>
 			</div>
 		</div>
