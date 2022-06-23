@@ -1,0 +1,12 @@
+.raceSessionHeader {
+	text-transform: capitalize;
+	margin-bottom: 1.75em;
+}
+
+.timingListRow {
+	cursor: pointer;
+}
+
+.QualifyingTimeSheet {
+	width: 60%;
+}

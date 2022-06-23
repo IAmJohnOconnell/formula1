@@ -1,10 +1,11 @@
 import React from "react"
+import styles from "./TimingBox.module.css"
 
 const TimingBox = ({ DriverQualifyingResults, session }) => {
 	return (
-		<div className='timingBox'>
-			<div className='timingBox-header'>{session}</div>
-			<div className='timingBox-content'>
+		<div className={styles.timingBox}>
+			<div>{session}</div>
+			<div className={styles.timingBoxContent}>
 				{DriverQualifyingResults
 					? DriverQualifyingResults
 					: "Click a driver to view times"}

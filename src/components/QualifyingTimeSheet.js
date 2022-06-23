@@ -1,9 +1,10 @@
 import React from "react"
+import styles from "./TimeSheet.module.css"
 
 const QualifyingTimeSheet = ({ results, setQualyTimes, session }) => {
 	return (
-		<div className='QualifyingTimeSheet'>
-			<div className='race-session-header'>
+		<div className={styles.QualifyingTimeSheet}>
+			<div className={styles.raceSessionHeader}>
 				<h3>
 					{results && results.raceName + " - "}
 					{session === "results" ? `Race ${session}` : `${session} Results`}
@@ -25,7 +26,7 @@ const QualifyingTimeSheet = ({ results, setQualyTimes, session }) => {
 							let driverFullName = `${result.Driver.givenName} ${result.Driver.familyName}`
 							return (
 								<tr
-									className='timingListRow'
+									className={styles.timingListRow}
 									key={result.position}
 									onClick={() => setQualyTimes(result)}>
 									<td>{result.position}</td>

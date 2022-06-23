@@ -1,4 +1,5 @@
 import React from "react"
+import styles from "./TimeSheet.module.css"
 
 const Standings = ({
 	postRaceDriverStandings,
@@ -6,8 +7,8 @@ const Standings = ({
 	selectedRaceWeekend,
 }) => {
 	return (
-		<div className='timingList'>
-			<div className='race-session-header'>
+		<div>
+			<div className={styles.raceSessionHeader}>
 				<h3>
 					{results &&
 						`Round ${selectedRaceWeekend} World Drivers Championship Standings`}
@@ -26,7 +27,7 @@ const Standings = ({
 					{postRaceDriverStandings &&
 						postRaceDriverStandings.map((result) => {
 							return (
-								<tr className='timingListRow' key={result.position}>
+								<tr className={styles.timingListRow} key={result.position}>
 									<td>{result.position}</td>
 									<td>
 										{result.Driver.givenName} {result.Driver.familyName}

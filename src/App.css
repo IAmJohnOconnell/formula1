@@ -10,45 +10,6 @@
 	padding: 1rem;
 }
 
-.nav {
-	display: flex;
-	list-style: none;
-}
-
-.nav li {
-	padding: 0.2rem;
-}
-
-.controls {
-	display: flex;
-	max-width: fit-content;
-	padding: 1em;
-	gap: 0.5em;
-}
-
-.mainContainer {
-	padding: 1rem;
-}
-
-.raceNameTextContainer {
-	text-transform: capitalize;
-	display: flex;
-	justify-content: space-between;
-}
-
-.raceNameTextContainer h3 {
-	border-bottom: 2px solid black;
-}
-
-.race-session-header {
-	text-transform: capitalize;
-	margin-bottom: 1.75em;
-}
-
-.session-results-header {
-	margin-bottom: 1em;
-}
-
 #aboutTime {
 	margin: 2rem auto;
 	text-align: center;
@@ -56,9 +17,11 @@
 	padding: 0.2em;
 }
 
-.timingWrapper {
+.controls {
 	display: flex;
-	gap: 1em;
+	max-width: fit-content;
+	padding: 1em;
+	gap: 0.5em;
 }
 
 select {
@@ -78,8 +41,9 @@ select {
 	gap: 1rem;
 }
 
-.QualifyingTimeSheet {
-	width: 60%;
+.timingWrapper {
+	display: flex;
+	gap: 1em;
 }
 
 table {
@@ -133,25 +97,9 @@ tbody tr:nth-child(even) {
 	background-color: lightgrey;
 }
 
-.timingListRow {
-	cursor: pointer;
-}
-
 .timingBoxes {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 	width: 40%;
-}
-
-.timingBox {
-	border: 2px solid black;
-	padding: 1em;
-	font-weight: bold;
-	max-width: 100%;
-	border-radius: 0.5em;
-}
-
-.timingBox-content {
-	text-align: center;
 }

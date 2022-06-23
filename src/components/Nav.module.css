@@ -1,0 +1,8 @@
+.nav {
+	display: flex;
+	list-style: none;
+}
+
+.nav li {
+	padding: 0.2rem;
+}

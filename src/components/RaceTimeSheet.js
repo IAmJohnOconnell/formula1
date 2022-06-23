@@ -1,9 +1,10 @@
 import React from "react"
+import styles from "./TimeSheet.module.css"
 
 const RaceTimeSheet = ({ results, session }) => {
 	return (
-		<div className='timingList'>
-			<div className='race-session-header'>
+		<div>
+			<div className={styles.raceSessionHeader}>
 				<h3>
 					{results && results.raceName + " - "}
 					{session === "results" ? `Race ${session}` : `${session} Results`}
@@ -26,7 +27,7 @@ const RaceTimeSheet = ({ results, session }) => {
 						results.Results.map((result) => {
 							let driverFullName = `${result.Driver.givenName} ${result.Driver.familyName}`
 							return (
-								<tr className='timingListRow' key={result.position}>
+								<tr className={styles.timingListRow} key={result.position}>
 									<td>{result.position}</td>
 									<td>{result.number}</td>
 									<td>{driverFullName}</td>
