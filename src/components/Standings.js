@@ -29,7 +29,7 @@ const Standings = ({
 							return (
 								<tr className={styles.timingListRow} key={result.position}>
 									<td>{result.position}</td>
-									<td>
+									<td className={styles.driver}>
 										{result.Driver.givenName} {result.Driver.familyName}
 									</td>
 									<td>{result.points}</td>

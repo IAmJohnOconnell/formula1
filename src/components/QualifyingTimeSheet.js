@@ -5,10 +5,10 @@ const QualifyingTimeSheet = ({ results, setQualyTimes, session }) => {
 	return (
 		<div className={styles.QualifyingTimeSheet}>
 			<div className={styles.raceSessionHeader}>
-				<h3>
+				<h1>
 					{results && results.raceName + " - "}
 					{session === "results" ? `Race ${session}` : `${session} Results`}
-				</h3>
+				</h1>
 			</div>
 			<table>
 				<thead>

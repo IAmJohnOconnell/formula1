@@ -4,11 +4,13 @@ import styles from "./TimingBox.module.css"
 const TimingBox = ({ DriverQualifyingResults, session }) => {
 	return (
 		<div className={styles.timingBox}>
-			<div>{session}</div>
+			<p className={styles.session}>{session}:</p>
 			<div className={styles.timingBoxContent}>
-				{DriverQualifyingResults
-					? DriverQualifyingResults
-					: "Click a driver to view times"}
+				<p>
+					{DriverQualifyingResults
+						? DriverQualifyingResults
+						: "Click a driver to view times"}
+				</p>
 			</div>
 		</div>
 	)

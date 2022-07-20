@@ -1,10 +1,14 @@
 import "./App.css"
 import { useEffect, useState } from "react"
+import { Routes, Route, Link } from "react-router-dom"
+import Landing from "./pages/Landing"
+import Home from "./pages/Home"
 import Nav from "./components/Nav"
 import TimingBox from "./components/TimingBox"
 import RaceTimeSheet from "./components/RaceTimeSheet"
 import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
 import Standings from "./components/Standings"
+import Controls from "./components/Controls"
 
 function App() {
 	// const [driversList, setDriversList] = useState()
@@ -14,6 +18,7 @@ function App() {
 	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
 	const [races, setRaces] = useState()
 	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
+	const [allCircuitsData, setAllCircuitsData] = useState()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -107,6 +112,21 @@ function App() {
 			})
 	}, [selectedSession, selectedRaceWeekend])
 
+	useEffect(() => {
+		fetch("https://v1.formula-1.api-sports.io/races/?season=2022&type=Race", {
+			method: "GET",
+			headers: {
+				"x-rapidapi-host": "api-formula-1.p.rapidapi.com",
+				"x-rapidapi-key": "98e4da09ca41b9c4736446c45949eda0",
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				let allCircuitsDataRes = data.response
+				setAllCircuitsData(allCircuitsDataRes)
+			})
+	}, [])
+
 	//Get list of drivers
 	// fetch("https://ergast.com/api/f1/current/drivers.json")
 	// 	.then((res) => res.json())
@@ -117,104 +137,77 @@ function App() {
 
 	return (
 		<div className='App'>
-			<div className='header'>
-				<div className='title'>
-					<h1>
-						Formula One
-						<br />
-						and Done
-					</h1>
-				</div>
-				<Nav />
-			</div>
-
-			<h2 id='aboutTime'>
-				It's About <i>Time</i>
-			</h2>
-
-			<div className='controls'>
-				<select
-					onChange={(e) => {
-						handleSelectedSessionChange(e)
-					}}>
-					<option value={"qualifying"}>Qualifying</option>
-					<option value={"results"}>Race</option>
-					<option value={"standings"}>Standings</option>
-				</select>
-
-				<select
-					onChange={(e) => {
-						handleSelectedRaceWeekendChange(e)
-					}}
-					defaultValue={""}>
-					<option value='' disabled>
-						Select a Race
-					</option>
-					{races &&
-						races.map((race) => {
-							return (
-								<option key={race.round} value={race.round}>
-									{race.raceName}
-								</option>
-							)
-						})}
-				</select>
-			</div>
-
-			<div className='timesheetContainer'>
-				<div className='timingWrapper'>
-					{selectedSession === "results" && (
-						<RaceTimeSheet
-							results={raceWeekendData && raceWeekendData}
-							session={selectedSession}
-						/>
-					)}
-
-					{selectedSession === "qualifying" && (
-						<QualifyingTimeSheet
-							results={raceWeekendData && raceWeekendData}
-							session={selectedSession}
-							setQualyTimes={setQualyTimes}
-						/>
-					)}
-
-					{selectedSession === "standings" && (
-						<Standings
-							results={raceWeekendData && raceWeekendData}
-							session={selectedSession}
-							selectedRaceWeekend={selectedRaceWeekend}
-							postRaceDriverStandings={postRaceDriverStandings}
-						/>
-					)}
-
-					{selectedSession === "qualifying" ? (
-						<div className='timingBoxes'>
-							<div className='session-results-header'>
-								<h3>Session Results</h3>
-							</div>
-							<TimingBox
-								DriverQualifyingResults={
-									DriverQualifyingResults && DriverQualifyingResults.Q1
-								}
-								session={"Q1"}
-							/>
-							<TimingBox
-								DriverQualifyingResults={
-									DriverQualifyingResults && DriverQualifyingResults.Q2
-								}
-								session={"Q2"}
-							/>
-							<TimingBox
-								DriverQualifyingResults={
-									DriverQualifyingResults && DriverQualifyingResults.Q3
-								}
-								session={"Q3"}
-							/>
-						</div>
-					) : null}
-				</div>
+			<Nav />
+			<div className='AppContainer'>
+				<Routes>
+					<Route path='/' element={<Landing />} />
+					<Route path='home' element={<Home />} />
+					{/* <Route path='about' element={<About />} /> */}
+				</Routes>
 			</div>
 		</div>
+		// 	<Landing />
+		// 	<Controls
+		// 		handleSelectedRaceWeekendChange={handleSelectedRaceWeekendChange}
+		// 		handleSelectedSessionChange={handleSelectedSessionChange}
+		// 		races={races}
+		// 	/>
+
+		// 	<div className='timesheetContainer'>
+		// 		<div className='timingWrapper'>
+		// 			{selectedSession === "results" && (
+		// 				<RaceTimeSheet
+		// 					results={raceWeekendData && raceWeekendData}
+		// 					session={selectedSession}
+		// 				/>
+		// 			)}
+
+		// 			{selectedSession === "qualifying" && (
+		// 				<QualifyingTimeSheet
+		// 					results={raceWeekendData && raceWeekendData}
+		// 					session={selectedSession}
+		// 					setQualyTimes={setQualyTimes}
+		// 				/>
+		// 			)}
+
+		// 			{selectedSession === "standings" && (
+		// 				<Standings
+		// 					results={raceWeekendData && raceWeekendData}
+		// 					session={selectedSession}
+		// 					selectedRaceWeekend={selectedRaceWeekend}
+		// 					postRaceDriverStandings={postRaceDriverStandings}
+		// 				/>
+		// 			)}
+
+		// 			{selectedSession === "qualifying" ? (
+		// 				<div className='timingBoxes'>
+		// 					<div className='session-results-header'>
+		// 						<h3>Session Results</h3>
+		// 					</div>
+		// 					<div className='timingBoxWrapper'>
+		// 						<TimingBox
+		// 							DriverQualifyingResults={
+		// 								DriverQualifyingResults && DriverQualifyingResults.Q1
+		// 							}
+		// 							session={"Q1"}
+		// 						/>
+		// 						<TimingBox
+		// 							DriverQualifyingResults={
+		// 								DriverQualifyingResults && DriverQualifyingResults.Q2
+		// 							}
+		// 							session={"Q2"}
+		// 						/>
+		// 						<TimingBox
+		// 							DriverQualifyingResults={
+		// 								DriverQualifyingResults && DriverQualifyingResults.Q3
+		// 							}
+		// 							session={"Q3"}
+		// 						/>
+		// 					</div>
+		// 				</div>
+		// 			) : null}
+		// 		</div>
+		// 	</div>
 	)
 }
 

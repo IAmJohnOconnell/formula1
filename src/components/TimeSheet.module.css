@@ -1,12 +1,36 @@
 .raceSessionHeader {
 	text-transform: capitalize;
 	margin-bottom: 1.75em;
+	font-size: 1.2em;
+	font-weight: bold;
 }
 
 .timingListRow {
 	cursor: pointer;
 }
 
+.timingListRow:hover {
+	font-weight: 500;
+	border-bottom: 2px solid gray;
+	color: white;
+}
+
 .QualifyingTimeSheet {
 	width: 60%;
 }
+
+.timeSheet {
+	padding: 2em;
+	border-radius: 0.5em;
+}
+
+.driver {
+	font-weight: 600;
+}
+
+/* .grow {
+	transition: all 0.2s ease-in-out;
+}
+.grow:hover {
+	transform: scale(1.1);
+} */

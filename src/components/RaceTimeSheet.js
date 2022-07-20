@@ -3,12 +3,12 @@ import styles from "./TimeSheet.module.css"
 
 const RaceTimeSheet = ({ results, session }) => {
 	return (
-		<div>
+		<div className={styles.timeSheet}>
 			<div className={styles.raceSessionHeader}>
-				<h3>
+				<h1>
 					{results && results.raceName + " - "}
 					{session === "results" ? `Race ${session}` : `${session} Results`}
-				</h3>
+				</h1>
 			</div>
 			<table>
 				<thead>

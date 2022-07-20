@@ -1,13 +1,59 @@
 import React from "react"
-import styles from "./Nav.module.css"
+import styled from "styled-components"
+import { BrowserRouter, Route, Link } from "react-router-dom"
+
+const NavContainer = styled.nav`
+	width: 225px;
+	background-color: #33363d;
+	border: 1px solid #e10600;
+	border-left: none;
+	border-top: none;
+	font-size: 1em;
+
+	div {
+		padding: 32px 12px 0px;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		align-items: center;
+		height: 100vh;
+		list-style: none;
+	}
+
+	a {
+		background-color: #24262b;
+		width: 100%;
+		text-align: center;
+		padding: 12px;
+		border: 1px solid transparent;
+		color: #f1f1f1;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: bold;
+		border-radius: 10px;
+		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
+	}
+
+	a:hover {
+		border: 1px solid #e10600;
+	}
+
+	a:active {
+		background-color: #e10600;
+	}
+`
 
 const Nav = () => {
 	return (
-		<nav className={styles.nav}>
-			<li>Home</li>
-			<li>Next</li>
-			<li>Last</li>
-		</nav>
+		<NavContainer>
+			<div>
+				<Link to='/home'>Home</Link>
+				<Link to='/teams'>Teams</Link>
+				<Link to='/drivers'>Drivers</Link>
+				<Link to='/standings'>Standings</Link>
+				<Link to='/results'>Results</Link>
+			</div>
+		</NavContainer>
 	)
 }
 
