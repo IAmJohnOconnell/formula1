@@ -28,9 +28,9 @@ const Date = styled.p`
 
 const Intro = styled.p`
 	color: #919bb3;
-	padding-top: 32px;
+	padding-top: 2em;
 	font-weight: normal;
-	font-size: 24;
+	font-size: 1.5em;
 	max-width: 55ch;
 `
 
@@ -40,21 +40,26 @@ const Header = styled.div`
 `
 
 const HomeNav = styled.div`
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-areas:
+		"one two"
+		"three four"
+		"five five";
 	padding-top: 2em;
-	max-width: 65%;
+	gap: 1em;
+	width: 100%;
 
 	a {
-		padding: 2em;
-		text-decoration: none;
-		text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-		color: #f1f1f1;
-		text-transform: uppercase;
-		font-weight: bold;
 		border: 1px solid #7889b3;
 		border-radius: 10px;
+		color: #f1f1f1;
+		font-weight: bold;
+		text-decoration: none;
+		text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
+		text-transform: uppercase;
+		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
+		width: 100%;
+		height: 125px;
 	}
 
 	a:hover {
@@ -63,6 +68,44 @@ const HomeNav = styled.div`
 
 	a:active {
 		background-color: #e10600;
+	}
+
+	p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 125px;
+	}
+
+	a:nth-child(1) {
+		grid-area: one;
+		border: 1px solid #e10600;
+		background: #e10600;
+	}
+	a:nth-child(2) {
+		grid-area: two;
+	}
+	a:nth-child(3) {
+		grid-area: three;
+	}
+	a:nth-child(4) {
+		grid-area: four;
+	}
+	a:nth-child(5) {
+		grid-area: five;
+	}
+
+	@media screen and (min-width: 600px) {
+		grid-template-areas: "one two three four five";
+	}
+
+	@media screen and (min-width: 900px) {
+		max-width: 100%;
+	}
+
+	@media screen and (min-width: 1200px) {
+		max-width: 55%;
 	}
 `
 
@@ -82,8 +125,22 @@ const ChampionshipLeadersSection = styled(Section)`
 `
 const ChampionshipLeadersContainer = styled.div`
 	display: flex;
-	gap: 3em;
-	max-width: 75%;
+	flex-direction: column;
+	width: 100%;
+
+	@media screen and (min-width: 600px) {
+		flex-direction: row;
+		gap: 3em;
+		justify-content: space-between;
+	}
+
+	@media screen and (min-width: 900px) {
+		max-width: 100%;
+	}
+
+	@media screen and (min-width: 1200px) {
+		max-width: 55%;
+	}
 `
 
 const MutedLabel = styled.p`
@@ -110,11 +167,21 @@ const Home = () => {
 			<Section>
 				<SectionLabel>Navigation</SectionLabel>
 				<HomeNav>
-					<Link to='/home'>Home</Link>
-					<Link to='/teams'>Teams</Link>
-					<Link to='/drivers'>Drivers</Link>
-					<Link to='/standings'>Standings</Link>
-					<Link to='/results'>Results</Link>
+					<Link to='/'>
+						<p>Home</p>
+					</Link>
+					<Link to='/teams'>
+						<p>Teams</p>
+					</Link>
+					<Link to='/drivers'>
+						<p>Drivers</p>
+					</Link>
+					<Link to='/standings'>
+						<p>Standings</p>
+					</Link>
+					<Link to='/results'>
+						<p>Results</p>
+					</Link>
 				</HomeNav>
 			</Section>
 			<Section>

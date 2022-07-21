@@ -1,11 +1,16 @@
 import React from "react"
 import styled from "styled-components"
 
-const StyledUpNext = styled.div``
+const StyledUpNext = styled.div`
+	display: none;
+	@media screen and (min-width: 600px) {
+		display: inline-block;
+	}
+`
 
 const Label = styled.p`
 	color: #e10600;
-	font-size: 0.75em;
+	font-size: 12px;
 	font-weight: bold;
 	text-transform: uppercase;
 	margin-bottom: 0.25em;

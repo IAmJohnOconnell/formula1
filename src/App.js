@@ -1,14 +1,15 @@
 import "./App.css"
 import { useEffect, useState } from "react"
-import { Routes, Route, Link } from "react-router-dom"
-import Landing from "./pages/Landing"
+import { Routes, Route, Link, useLocation, withRouter } from "react-router-dom"
 import Home from "./pages/Home"
+import Teams from "./pages/Teams"
+import Drivers from "./pages/Drivers"
 import Nav from "./components/Nav"
-import TimingBox from "./components/TimingBox"
-import RaceTimeSheet from "./components/RaceTimeSheet"
-import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
-import Standings from "./components/Standings"
-import Controls from "./components/Controls"
+// import TimingBox from "./components/TimingBox"
+// import RaceTimeSheet from "./components/RaceTimeSheet"
+// import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
+// import Standings from "./components/Standings"
+// import Controls from "./components/Controls"
 
 function App() {
 	// const [driversList, setDriversList] = useState()
@@ -19,6 +20,7 @@ function App() {
 	const [races, setRaces] = useState()
 	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
 	const [allCircuitsData, setAllCircuitsData] = useState()
+	const { pathname } = useLocation()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -53,8 +55,8 @@ function App() {
 		}
 	}
 
+	//Get All Races - for dropdowns
 	useEffect(() => {
-		//Get All Races - for dropdowns
 		fetch(`http://ergast.com/api/f1/current.json`)
 			.then((res) => res.json())
 			.then((data) => {
@@ -63,8 +65,8 @@ function App() {
 			})
 	}, [])
 
+	//Get Selected Race
 	useEffect(() => {
-		//Get Selected Race
 		fetch(
 			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/${selectedSession}.json`
 		)
@@ -112,6 +114,7 @@ function App() {
 			})
 	}, [selectedSession, selectedRaceWeekend])
 
+	//Get Circuit Data
 	useEffect(() => {
 		fetch("https://v1.formula-1.api-sports.io/races/?season=2022&type=Race", {
 			method: "GET",
@@ -127,87 +130,17 @@ function App() {
 			})
 	}, [])
 
-	//Get list of drivers
-	// fetch("https://ergast.com/api/f1/current/drivers.json")
-	// 	.then((res) => res.json())
-	// 	.then((data) => {
-	// 		let currentDrivers = data.MRData.DriverTable.Drivers
-	// 		setDriversList(currentDrivers)
-	// 	})
-
 	return (
 		<div className='App'>
-			<Nav />
+			{pathname === "/" ? null : <Nav />}
 			<div className='AppContainer'>
 				<Routes>
-					<Route path='/' element={<Landing />} />
-					<Route path='home' element={<Home />} />
-					{/* <Route path='about' element={<About />} /> */}
+					<Route path='/' element={<Home />} />
+					<Route path='teams' element={<Teams />} />
+					<Route path='drivers' element={<Drivers />} />
 				</Routes>
 			</div>
 		</div>
-		// 	<Landing />
-		// 	<Controls
-		// 		handleSelectedRaceWeekendChange={handleSelectedRaceWeekendChange}
-		// 		handleSelectedSessionChange={handleSelectedSessionChange}
-		// 		races={races}
-		// 	/>
-
-		// 	<div className='timesheetContainer'>
-		// 		<div className='timingWrapper'>
-		// 			{selectedSession === "results" && (
-		// 				<RaceTimeSheet
-		// 					results={raceWeekendData && raceWeekendData}
-		// 					session={selectedSession}
-		// 				/>
-		// 			)}
-
-		// 			{selectedSession === "qualifying" && (
-		// 				<QualifyingTimeSheet
-		// 					results={raceWeekendData && raceWeekendData}
-		// 					session={selectedSession}
-		// 					setQualyTimes={setQualyTimes}
-		// 				/>
-		// 			)}
-
-		// 			{selectedSession === "standings" && (
-		// 				<Standings
-		// 					results={raceWeekendData && raceWeekendData}
-		// 					session={selectedSession}
-		// 					selectedRaceWeekend={selectedRaceWeekend}
-		// 					postRaceDriverStandings={postRaceDriverStandings}
-		// 				/>
-		// 			)}
-
-		// 			{selectedSession === "qualifying" ? (
-		// 				<div className='timingBoxes'>
-		// 					<div className='session-results-header'>
-		// 						<h3>Session Results</h3>
-		// 					</div>
-		// 					<div className='timingBoxWrapper'>
-		// 						<TimingBox
-		// 							DriverQualifyingResults={
-		// 								DriverQualifyingResults && DriverQualifyingResults.Q1
-		// 							}
-		// 							session={"Q1"}
-		// 						/>
-		// 						<TimingBox
-		// 							DriverQualifyingResults={
-		// 								DriverQualifyingResults && DriverQualifyingResults.Q2
-		// 							}
-		// 							session={"Q2"}
-		// 						/>
-		// 						<TimingBox
-		// 							DriverQualifyingResults={
-		// 								DriverQualifyingResults && DriverQualifyingResults.Q3
-		// 							}
-		// 							session={"Q3"}
-		// 						/>
-		// 					</div>
-		// 				</div>
-		// 			) : null}
-		// 		</div>
-		// 	</div>
 	)
 }
 

@@ -28,15 +28,15 @@ const Text = styled.div`
 	max-width: 75%;
 	width: 100%;
 `
-const ChampionshipLeaderCard = ({ name, photo }) => {
+const ChampionshipLeaderCard = ({ text, photo }) => {
 	return (
 		<StyledChampionshipLeaderCard>
 			<PhotoContainer>
-				<img src={photo} alt='Driver'></img>
+				<img src={photo} alt=''></img>
 			</PhotoContainer>
 
 			<Text>
-				<p>{name}</p>
+				<p>{text}</p>
 			</Text>
 		</StyledChampionshipLeaderCard>
 	)
