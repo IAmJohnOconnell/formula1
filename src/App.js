@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import Teams from "./pages/Teams"
 import Drivers from "./pages/Drivers"
 import Nav from "./components/Nav"
+import Standings from "./pages/Standings"
 // import TimingBox from "./components/TimingBox"
 // import RaceTimeSheet from "./components/RaceTimeSheet"
 // import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
@@ -138,6 +139,17 @@ function App() {
 					<Route path='/' element={<Home />} />
 					<Route path='teams' element={<Teams />} />
 					<Route path='drivers' element={<Drivers />} />
+					<Route
+						path='standings'
+						element={
+							<Standings
+								postRaceDriverStandings={postRaceDriverStandings}
+								results={raceWeekendData && raceWeekendData}
+								selectedRaceWeekend={selectedRaceWeekend}
+								session={selectedSession}
+							/>
+						}
+					/>
 				</Routes>
 			</div>
 		</div>

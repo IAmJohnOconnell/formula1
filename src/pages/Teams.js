@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import Nav from "../components/Nav"
 import Card from "../components/Card"
+import SectionHeader from "../components/SectionHeader"
 // Team Logos
 import RedBull_Logo from "../assets/teams/redbull_logo.png"
 import Ferrari_Logo from "../assets/teams/ferrari_logo.png"
@@ -41,10 +41,10 @@ const PageContainer = styled.div`
 const Teams = () => {
 	return (
 		<TeamsPage>
-			<div>
-				<h1>F1 Teams 2022</h1>
-				<h2>This seasons Driver line-up</h2>
-			</div>
+			<SectionHeader
+				title={"F1 Teams 2022"}
+				subtitle={"Check out the teams competing for the top spot."}
+			/>
 			<PageContainer>
 				<Card text='Red Bull' photo={RedBull_Logo} />
 				<Card text='Ferrari' photo={Ferrari_Logo} />

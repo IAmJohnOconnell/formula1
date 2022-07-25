@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Card from "../components/Card"
+import SectionHeader from "../components/SectionHeader"
 // Driver Photos
 import MVerstappen from "../assets/drivers/maxverstappen.png"
 import SPerez from "../assets/drivers/sergioperez.png"
@@ -23,20 +24,7 @@ import PGasly from "../assets/drivers/pierregasly.png"
 import YTsunoda from "../assets/drivers/yukitsunoda.png"
 import VBottas from "../assets/drivers/valtteribottas.png"
 
-const TeamsPage = styled.div`
-	h1 {
-		font-size: 2rem;
-		color: white;
-	}
-
-	h2 {
-		max-width: 55ch;
-		padding-top: 1.5rem;
-		color: #919bb3;
-		font-size: 1.5rem;
-		font-weight: normal;
-	}
-`
+const DriversPage = styled.div``
 
 const PageContainer = styled.div`
 	display: grid;
@@ -49,11 +37,11 @@ const PageContainer = styled.div`
 
 const Teams = () => {
 	return (
-		<TeamsPage>
-			<div>
-				<h1>F1 Drivers 2022</h1>
-				<h2>This seasons Driver line-up</h2>
-			</div>
+		<DriversPage>
+			<SectionHeader
+				title={"F1 Drivers 2022"}
+				subtitle={"This seasons Driver line-up"}
+			/>
 			<PageContainer>
 				<Card text='Max Verstappen' photo={MVerstappen} />
 				<Card text='Sergio Perez' photo={SPerez} />
@@ -76,7 +64,7 @@ const Teams = () => {
 				<Card text='Alex Albon' photo={AAlbon} />
 				<Card text='Nicholas Latifi' photo={NLatifi} />
 			</PageContainer>
-		</TeamsPage>
+		</DriversPage>
 	)
 }
 
