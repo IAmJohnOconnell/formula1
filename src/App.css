@@ -12,5 +12,6 @@
 
 .AppContainer {
 	padding: 2em;
+	width: 100%;
 	min-width: 75%;
 }

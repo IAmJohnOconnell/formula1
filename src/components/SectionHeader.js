@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const SectionHeaderComponent = styled.div`
 	h1 {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		color: white;
 	}
 
@@ -11,7 +11,7 @@ const SectionHeaderComponent = styled.div`
 		max-width: 55ch;
 		padding-top: 1.5rem;
 		color: #919bb3;
-		font-size: 1.5rem;
+		font-size: 1rem;
 		font-weight: normal;
 	}
 `
