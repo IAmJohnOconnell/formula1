@@ -3,12 +3,9 @@ import styled from "styled-components"
 import SectionHeader from "../components/SectionHeader"
 
 const TimingListRow = styled.tr`
-	cursor: pointer;
-
 	:hover {
-		font-weight: 500;
-		border-bottom: 2px solid gray;
-		color: white;
+		border-bottom: 1px solid gray;
+		color: #e10600;
 	}
 
 	.driver {
@@ -17,18 +14,29 @@ const TimingListRow = styled.tr`
 `
 
 const PageContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
 	max-width: 100%;
 	width: 100%;
 	gap: 2em;
 	scroll-behavior: smooth;
 
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-auto-flow: row;
+	color: white;
+
 	table {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+		border-collapse: collapse;
+		justify-content: baseline;
+		margin-top: 2rem;
+
+		th,
+		td {
+			padding: 0.4em;
+			text-align: left;
+		}
+
+		td {
+		}
 	}
 `
 
@@ -49,8 +57,8 @@ const Standings = ({
 						<tr>
 							<th>Pos</th>
 							<th>Driver</th>
-							<th>Points</th>
-							<th>Constructor</th>
+							<th>Pts</th>
+							<th>Team</th>
 						</tr>
 					</thead>
 					<tbody>
