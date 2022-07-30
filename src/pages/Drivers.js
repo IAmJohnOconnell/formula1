@@ -16,14 +16,6 @@ const PageContainer = styled.div`
 `
 
 const Drivers = ({ photos, drivers }) => {
-	//ergast.com/api/f1/current/drivers
-	// 	let driver = result.Driver
-	// 	let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
-	// 	let driverphoto = `${driver.givenName}${driver.familyName}`
-	// 		.toLowerCase()
-	// 		.normalize("NFD")
-	// 		.replace(/[\u0300-\u036f]/g, "")
-
 	return (
 		<DriversPage>
 			<SectionHeader
@@ -33,7 +25,6 @@ const Drivers = ({ photos, drivers }) => {
 			<PageContainer>
 				{drivers &&
 					drivers.map((driver) => {
-						// let driver = result
 						let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
 						let driverphoto = `${driver.givenName}${driver.familyName}`
 

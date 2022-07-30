@@ -94,6 +94,7 @@ function App() {
 	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
 	const [allCircuitsData, setAllCircuitsData] = useState()
 	const { pathname } = useLocation()
+	const [constructorData, setConstructorsData] = useState()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -203,7 +204,26 @@ function App() {
 			})
 	}, [])
 
+	//Get Constructor Data
+	// useEffect(() => {
+	// 	fetch("https://v1.formula-1.api-sports.io/teams", {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"x-rapidapi-host": "api-formula-1.p.rapidapi.com",
+	// 			"x-rapidapi-key": "98e4da09ca41b9c4736446c45949eda0",
+	// 		},
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			let validConstructors = data.response.filter(
+	// 				(team) => team.base != null
+	// 			)
+	// 			setConstructorsData(validConstructors)
+	// 		})
+	// }, [])
+
 	//Get Drivers
+
 	useEffect(() => {
 		fetch("http://ergast.com/api/f1/current/drivers.json")
 			.then((res) => res.json())
@@ -219,7 +239,12 @@ function App() {
 			<div className='AppContainer'>
 				<Routes>
 					<Route path='/' element={<Home />} />
-					<Route path='teams' element={<Teams photos={teamPhotos} />} />
+					<Route
+						path='teams'
+						element={
+							<Teams photos={teamPhotos} constructors={constructorData} />
+						}
+					/>
 					<Route
 						path='drivers'
 						element={<Drivers photos={driverPhotos} drivers={driversList} />}
