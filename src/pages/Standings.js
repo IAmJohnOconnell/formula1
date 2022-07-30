@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import SectionHeader from "../components/SectionHeader"
+import Card from "../components/Card"
 
 const TimingListRow = styled.tr`
 	:hover {
@@ -40,10 +41,13 @@ const PageContainer = styled.div`
 	}
 `
 
+const driverPhotosURL = `../assets/drivers/`
+
 const Standings = ({
 	postRaceDriverStandings,
 	results,
 	selectedRaceWeekend,
+	photos,
 }) => {
 	return (
 		<div>
@@ -52,34 +56,42 @@ const Standings = ({
 				subtitle={"Who will claim victory and make history?"}
 			/>
 			<PageContainer>
-				<table>
-					<thead>
-						<tr>
-							<th>Pos</th>
-							<th>Driver</th>
-							<th>Pts</th>
-							<th>Team</th>
-						</tr>
-					</thead>
-					<tbody>
+				<div>
+					<div>
 						{postRaceDriverStandings &&
 							postRaceDriverStandings.map((result) => {
+								let driver = result.Driver
+								let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
+								let driverphoto = `${driver.givenName}${driver.familyName}`
+									.toLowerCase()
+									.normalize("NFD")
+									.replace(/[\u0300-\u036f]/g, "")
+
 								return (
-									<TimingListRow key={result.position}>
-										<td>{result.position}</td>
-										<td className='driver'>
-											{result.Driver.givenName} {result.Driver.familyName}
-										</td>
-										<td>{result.points}</td>
-										<td>{result.Constructors[0].name}</td>
-									</TimingListRow>
+									<Card
+										key={result.position}
+										text={driverName}
+										photo={photos[driverphoto]}
+									/>
+
+									// <TimingListRow key={result.position}>
+									// 	<td>{result.position}</td>
+									// 	<td className='driver'>
+									// 		{result.Driver.givenName} {result.Driver.familyName}
+									// 	</td>
+									// 	<td>{result.points}</td>
+									// 	<td>{result.Constructors[0].name}</td>
+									// </TimingListRow>
 								)
 							})}
-					</tbody>
-				</table>
+					</div>
+				</div>
 			</PageContainer>
 		</div>
 	)
 }
 
 export default Standings
+
+//ALT 0233  Perez
+//ALT 0252 Hulkerberg
