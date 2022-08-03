@@ -14,6 +14,8 @@ const SectionHeaderComponent = styled.div`
 		font-size: 1rem;
 		font-weight: normal;
 	}
+
+	margin-bottom: 2rem;
 `
 
 const SectionHeader = ({ title, subtitle }) => {

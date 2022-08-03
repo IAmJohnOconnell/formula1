@@ -202,10 +202,22 @@ const TeamsPage = styled.div`
 
 const PageContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 1fr;
+	grid-auto-flow: row;
 	max-width: 100%;
 	width: 100%;
 	gap: 2em;
+
+	@media screen and (min-width: 600px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media screen and (min-width: 900px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media screen and (min-width: 1200px) {
+	}
 `
 
 const Teams = ({ photos, constructors }) => {
@@ -217,10 +229,16 @@ const Teams = ({ photos, constructors }) => {
 			/>
 			<PageContainer>
 				{TEMPCONSTRUCTORS.map((constructor) => {
-					return console.log(constructor)
+					return (
+						<Card
+							text={constructor.name}
+							photo={constructor.logo}
+							key={constructor.id}
+							type='teams'
+						/>
+					)
 				})}
-				<Card text='Red Bull' photo={photos.RedBull_Logo} />
-				<Card text='Ferrari' photo={photos.Ferrari_Logo} />
+				{/* <Card text='Ferrari' photo={photos.Ferrari_Logo} />
 				<Card text='Mercedes' photo={photos.Mercedes_Logo} />
 				<Card text='McLaren' photo={photos.McLaren_Logo} />
 				<Card text='Alpine' photo={photos.Alpine_Logo} />
@@ -228,7 +246,7 @@ const Teams = ({ photos, constructors }) => {
 				<Card text='Alfa Romeo' photo={photos.AlfaRomeo_Logo} />
 				<Card text='Aston Martin' photo={photos.AstonMartin_Logo} />
 				<Card text='Williams' photo={photos.Williams_Logo} />
-				<Card text='Haas' photo={photos.Haas_Logo} />
+				<Card text='Haas' photo={photos.Haas_Logo} /> */}
 			</PageContainer>
 		</TeamsPage>
 	)

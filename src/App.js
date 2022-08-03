@@ -1,4 +1,3 @@
-import "./App.css"
 import { useEffect, useState } from "react"
 import { Routes, Route, Link, useLocation, withRouter } from "react-router-dom"
 import Home from "./pages/Home"
@@ -88,7 +87,7 @@ function App() {
 	const [driversList, setDriversList] = useState()
 	const [DriverQualifyingResults, setDriverQualifyingResults] = useState()
 	const [raceWeekendData, setRaceWeekendData] = useState()
-	const [selectedSession, setSelectedSession] = useState("qualifying")
+	const [selectedSession, setSelectedSession] = useState("results")
 	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
 	const [races, setRaces] = useState()
 	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
@@ -189,20 +188,20 @@ function App() {
 	}, [selectedSession, selectedRaceWeekend])
 
 	//Get Circuit Data
-	useEffect(() => {
-		fetch("https://v1.formula-1.api-sports.io/races/?season=2022&type=Race", {
-			method: "GET",
-			headers: {
-				"x-rapidapi-host": "api-formula-1.p.rapidapi.com",
-				"x-rapidapi-key": "98e4da09ca41b9c4736446c45949eda0",
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				let allCircuitsDataRes = data.response
-				setAllCircuitsData(allCircuitsDataRes)
-			})
-	}, [])
+	// useEffect(() => {
+	// 	fetch("https://v1.formula-1.api-sports.io/races/?season=2022&type=Race", {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"x-rapidapi-host": "api-formula-1.p.rapidapi.com",
+	// 			"x-rapidapi-key": "98e4da09ca41b9c4736446c45949eda0",
+	// 		},
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			let allCircuitsDataRes = data.response
+	// 			setAllCircuitsData(allCircuitsDataRes)
+	// 		})
+	// }, [])
 
 	//Get Constructor Data
 	// useEffect(() => {

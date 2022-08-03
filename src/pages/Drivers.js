@@ -1,19 +1,10 @@
 import React from "react"
 import styled from "styled-components"
+import PageContainer from "../components/PageContainer"
 import Card from "../components/Card"
 import SectionHeader from "../components/SectionHeader"
 
 const DriversPage = styled.div``
-
-const PageContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-auto-flow: row;
-	max-width: 100%;
-	width: 100%;
-	gap: 2em;
-	scroll-behavior: smooth;
-`
 
 const Drivers = ({ photos, drivers }) => {
 	return (
@@ -35,7 +26,9 @@ const Drivers = ({ photos, drivers }) => {
 							<Card
 								text={driverName}
 								photo={photos[driverphoto]}
+								number={driver.permanentNumber}
 								key={parseInt(driver.permanentNumber)}
+								type='drivers'
 							/>
 						)
 					})}

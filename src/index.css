@@ -18,3 +18,27 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
+
+.App {
+	font-size: 1.6em;
+	max-width: 1920px;
+	margin: 0 auto;
+	min-height: 100vh;
+	border-radius: 0.5em;
+	background-color: #24262b;
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.55);
+
+	display: flex;
+}
+
+.AppContainer {
+	padding: 2em;
+	width: 100%;
+	min-width: 75%;
+}
+
+:root {
+	--text-shadow-1: text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+	--text-shadow-2: text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+
+}
