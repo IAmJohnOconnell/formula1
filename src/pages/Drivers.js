@@ -16,18 +16,21 @@ const Drivers = ({ photos, drivers }) => {
 			<PageContainer>
 				{drivers &&
 					drivers.map((driver) => {
-						let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
-						let driverphoto = `${driver.givenName}${driver.familyName}`
-
+						let driverInfo = driver.driverInfo
+						let driverTeaminfo = driver.team
+						let driverName = `${driverInfo.givenName.normalize()} ${driverInfo.familyName.normalize()}`
+						let driverphoto = `${driverInfo.givenName}${driverInfo.familyName}`
 							.toLowerCase()
 							.normalize("NFD")
 							.replace(/[\u0300-\u036f]/g, "")
+
 						return (
 							<Card
 								text={driverName}
-								photo={photos[driverphoto]}
-								number={driver.permanentNumber}
-								key={parseInt(driver.permanentNumber)}
+								team={driverTeaminfo}
+								photo={photos.driver[driverphoto]}
+								number={driverInfo.permanentNumber}
+								key={parseInt(driverInfo.permanentNumber)}
 								type='drivers'
 							/>
 						)

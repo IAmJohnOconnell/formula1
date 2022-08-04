@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Routes, Route, Link, useLocation, withRouter } from "react-router-dom"
 import Home from "./pages/Home"
 import Teams from "./pages/Teams"
 import Drivers from "./pages/Drivers"
-import Nav from "./components/Nav"
 import Standings from "./pages/Standings"
+import Nav from "./components/Nav"
 // import TimingBox from "./components/TimingBox"
 // import RaceTimeSheet from "./components/RaceTimeSheet"
 // import QualifyingTimeSheet from "./components/QualifyingTimeSheet"
@@ -12,16 +12,16 @@ import Standings from "./pages/Standings"
 // import Controls from "./components/Controls"
 
 // Team Logos
-import RedBull_Logo from "./assets/teams/redbull_logo.png"
-import Ferrari_Logo from "./assets/teams/ferrari_logo.png"
-import Mercedes_Logo from "./assets/teams/mercedes_logo.png"
-import McLaren_Logo from "./assets/teams/mclaren_logo.png"
-import Alpine_Logo from "./assets/teams/alpine_logo.png"
-import AlphaTauri_Logo from "./assets/teams/alphatauri_logo.png"
-import AlfaRomeo_Logo from "./assets/teams/alfaromeo_logo.png"
-import AstonMartin_Logo from "./assets/teams/astonmartin_logo.png"
-import Williams_Logo from "./assets/teams/williams_logo.png"
-import Haas_Logo from "./assets/teams/haas_logo.png"
+import RedBullRacing from "./assets/teams/redbull_logo.png"
+import ScuderiaFerrari from "./assets/teams/ferrari_logo.png"
+import MercedesAMGPetronas from "./assets/teams/mercedes_logo.png"
+import McLarenRacing from "./assets/teams/mclaren_logo.png"
+import AlpineF1Team from "./assets/teams/alpine_logo.png"
+import ScuderiaAlphaTauriHonda from "./assets/teams/alphatauri_logo.png"
+import AlfaRomeo from "./assets/teams/alfaromeo_logo.png"
+import AstonMartinF1Team from "./assets/teams/astonmartin_logo.png"
+import WilliamsF1Team from "./assets/teams/williams_logo.png"
+import HaasF1Team from "./assets/teams/haas_logo.png"
 
 // Driver Photos
 import maxverstappen from "./assets/drivers/maxverstappen.png"
@@ -46,41 +46,43 @@ import yukitsunoda from "./assets/drivers/yukitsunoda.png"
 import valtteribottas from "./assets/drivers/valtteribottas.png"
 import nicohulkenberg from "./assets/drivers/nicohulkenberg.png"
 
-let driverPhotos = {
-	maxverstappen,
-	sergioperez,
-	charlesleclerc,
-	carlossainz,
-	lewishamilton,
-	nicholaslatifi,
-	fernandoalonso,
-	lancestroll,
-	georgerussell,
-	guanyuzhou,
-	estebanocon,
-	kevinmagnussen,
-	danielricciardo,
-	landonorris,
-	sebastianvettel,
-	alexanderalbon,
-	mickschumacher,
-	pierregasly,
-	yukitsunoda,
-	valtteribottas,
-	nicohulkenberg,
-}
+let photos = {
+	driver: {
+		maxverstappen,
+		sergioperez,
+		charlesleclerc,
+		carlossainz,
+		lewishamilton,
+		nicholaslatifi,
+		fernandoalonso,
+		lancestroll,
+		georgerussell,
+		guanyuzhou,
+		estebanocon,
+		kevinmagnussen,
+		danielricciardo,
+		landonorris,
+		sebastianvettel,
+		alexanderalbon,
+		mickschumacher,
+		pierregasly,
+		yukitsunoda,
+		valtteribottas,
+		nicohulkenberg,
+	},
 
-let teamPhotos = {
-	RedBull_Logo,
-	Ferrari_Logo,
-	Mercedes_Logo,
-	McLaren_Logo,
-	Alpine_Logo,
-	AlphaTauri_Logo,
-	AlfaRomeo_Logo,
-	AstonMartin_Logo,
-	Williams_Logo,
-	Haas_Logo,
+	team: {
+		RedBullRacing,
+		ScuderiaFerrari,
+		MercedesAMGPetronas,
+		McLarenRacing,
+		AlpineF1Team,
+		ScuderiaAlphaTauriHonda,
+		AlfaRomeo,
+		AstonMartinF1Team,
+		WilliamsF1Team,
+		HaasF1Team,
+	},
 }
 
 function App() {
@@ -91,9 +93,11 @@ function App() {
 	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
 	const [races, setRaces] = useState()
 	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
-	const [allCircuitsData, setAllCircuitsData] = useState()
+	// const [allCircuitsData, setAllCircuitsData] = useState()
 	const { pathname } = useLocation()
-	const [constructorData, setConstructorsData] = useState()
+	// const [constructorData, setConstructorsData] = useState()
+	const [F1Data, setF1Data] = useState()
+	const [DriverData, setDriverData] = useState()
 
 	const setQualyTimes = (result) => {
 		let Q1, Q2, Q3
@@ -139,7 +143,9 @@ function App() {
 	}, [])
 
 	//Get Selected Race
+
 	useEffect(() => {
+		//Get raceWeekendData
 		fetch(
 			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/${selectedSession}.json`
 		)
@@ -170,11 +176,10 @@ function App() {
 					}
 				}
 
-				// console.log(formattedRaceWeekendData)
-
 				setRaceWeekendData(formattedRaceWeekendData)
 			})
 
+		//Get postRaceDriverStandings
 		fetch(
 			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/driverStandings.json`
 		)
@@ -182,10 +187,33 @@ function App() {
 			.then((data) => {
 				let postRaceDriverStandingsResults =
 					data.MRData.StandingsTable.StandingsLists[0].DriverStandings
-				// console.log(postRaceDriverStandingsResults)
 				setPostRaceDriverStandings(postRaceDriverStandingsResults)
 			})
 	}, [selectedSession, selectedRaceWeekend])
+
+	useEffect(() => {
+		let testDriverData = []
+		postRaceDriverStandings &&
+			postRaceDriverStandings.map((result) => {
+				let driver = result.Driver
+				// let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
+				let driverPhoto = `${driver.givenName}${driver.familyName}`
+					.toLowerCase()
+					.normalize("NFD")
+					.replace(/[\u0300-\u036f]/g, "")
+				let team = result.Constructors[0]
+
+				let driverData = {
+					driverInfo: driver,
+					driverPhoto,
+					team,
+				}
+
+				testDriverData.push(driverData)
+
+				return setDriverData(testDriverData)
+			})
+	}, [postRaceDriverStandings])
 
 	//Get Circuit Data
 	// useEffect(() => {
@@ -221,8 +249,189 @@ function App() {
 	// 		})
 	// }, [])
 
-	//Get Drivers
+	let TEMPCONSTRUCTORS = [
+		{
+			id: 1,
+			name: "Red Bull Racing",
+			logo: "https://media.api-sports.io/formula-1/teams/1.png",
+			base: "Milton Keynes, United Kingdom",
+			first_team_entry: 1997,
+			world_championships: 4,
+			highest_race_finish: {
+				position: 1,
+				number: 83,
+			},
+			pole_positions: 77,
+			fastest_laps: 81,
+			president: "Dietrich Mateschitz",
+			director: "Christian Horner",
+			technical_manager: "Pierre Waché",
+			chassis: "RB18",
+			engine: "Red Bull Powertrains",
+			tyres: "Pirelli",
+		},
+		{
+			id: 2,
+			name: "McLaren Racing",
+			logo: "https://media.api-sports.io/formula-1/teams/2.png",
+			base: "Woking, United Kingdom",
+			first_team_entry: 1966,
+			world_championships: 8,
+			highest_race_finish: {
+				position: 1,
+				number: 183,
+			},
+			pole_positions: 156,
+			fastest_laps: 161,
+			president: "Zak Brown",
+			director: "Andreas Seidl",
+			technical_manager: "James Key",
+			chassis: "MCL36",
+			engine: "Mercedes",
+			tyres: "Pirelli",
+		},
+		{
+			id: 3,
+			name: "Scuderia Ferrari",
+			logo: "https://media.api-sports.io/formula-1/teams/3.png",
+			base: "Maranello, Italy",
+			first_team_entry: 1950,
+			world_championships: 16,
+			highest_race_finish: {
+				position: 1,
+				number: 243,
+			},
+			pole_positions: 238,
+			fastest_laps: 258,
+			president: "John Elkann",
+			director: "Mattia Binotto",
+			technical_manager: "Enrico Cardile / Enrico Gualtieri",
+			chassis: "F1-75",
+			engine: "Ferrari",
+			tyres: "Pirelli",
+		},
+		{
+			id: 5,
+			name: "Mercedes-AMG Petronas",
+			logo: "https://media.api-sports.io/formula-1/teams/5.png",
+			base: "Brackley, United Kingdom",
+			first_team_entry: 1970,
+			world_championships: 8,
+			highest_race_finish: "{number: 115, position: 1}",
+			pole_positions: 127,
+			fastest_laps: 86,
+			president: "Markus Schäfer",
+			director: "Toto Wolff",
+			technical_manager: "Mike Elliott",
+			chassis: "W13",
+			engine: "Mercedes",
+			tyres: "Pirelli",
+		},
+		{
+			id: 7,
+			name: "Scuderia AlphaTauri Honda",
+			logo: "https://media.api-sports.io/formula-1/teams/7.png",
+			base: "Faenza, Italy",
+			first_team_entry: 1985,
+			world_championships: 0,
+			highest_race_finish: "{number: 2, position: 1}",
+			pole_positions: 1,
+			fastest_laps: 2,
+			president: "Dietrich Mateschitz",
+			director: "Franz Tost",
+			technical_manager: "Jody Egginton",
+			chassis: "AT03",
+			engine: "Red Bull Powertrains",
+			tyres: "Pirelli",
+		},
+		{
+			id: 12,
+			name: "Williams F1 Team",
+			logo: "https://media.api-sports.io/formula-1/teams/12.png",
+			base: "Grove, United Kingdom",
+			first_team_entry: 1978,
+			world_championships: 9,
+			highest_race_finish: "{number: 114, position: 1}",
+			pole_positions: 128,
+			fastest_laps: 133,
+			president: "Claire Williams",
+			director: "Jost Capito",
+			technical_manager: "François-Xavier Demaison",
+			chassis: "FW44",
+			engine: "Mercedes",
+			tyres: "Pirelli",
+		},
+		{
+			id: 13,
+			name: "Alpine F1 Team",
+			logo: "https://media.api-sports.io/formula-1/teams/13.png",
+			base: "Enstone, United Kingdom",
+			first_team_entry: 1986,
+			world_championships: 2,
+			highest_race_finish: "{number: 21, position: 1}",
+			pole_positions: 20,
+			fastest_laps: 15,
+			president: "Alain Prost, Jérôme Stoll ",
+			director: "Otmar Szafnauer",
+			technical_manager: "Pat Fry",
+			chassis: "A522",
+			engine: "Renault",
+			tyres: "Pirelli",
+		},
+		{
+			id: 14,
+			name: "Haas F1 Team",
+			logo: "https://media.api-sports.io/formula-1/teams/14.png",
+			base: "Kannapolis, United States",
+			first_team_entry: 2016,
+			world_championships: 0,
+			highest_race_finish: "{number: 1, position: 4}",
+			pole_positions: 0,
+			fastest_laps: 2,
+			president: "Gene Haas",
+			director: "Guenther Steiner",
+			technical_manager: "Simone Resta",
+			chassis: "VF-22",
+			engine: "Ferrari",
+			tyres: "Pirelli",
+		},
+		{
+			id: 17,
+			name: "Aston Martin F1 Team",
+			logo: "https://media.api-sports.io/formula-1/teams/17.png",
+			base: "Silverstone, United Kingdom",
+			first_team_entry: 2018,
+			world_championships: 0,
+			highest_race_finish: "{number: 1, position: 1}",
+			pole_positions: 1,
+			fastest_laps: 0,
+			president: "Lawrence Stroll",
+			director: "Mike Krack",
+			technical_manager: "Andrew Green",
+			chassis: "AMR22",
+			engine: "Mercedes",
+			tyres: "Pirelli",
+		},
+		{
+			id: 18,
+			name: "Alfa Romeo",
+			logo: "https://media.api-sports.io/formula-1/teams/18.png",
+			base: "Hinwil, Switzerland",
+			first_team_entry: 1993,
+			world_championships: 0,
+			highest_race_finish: "{number: 1, position: 1}",
+			pole_positions: 1,
+			fastest_laps: 5,
+			president: "Pascal Picci",
+			director: "Frédéric Vasseur",
+			technical_manager: "Jan Monchaux",
+			chassis: "C42",
+			engine: "Ferrari",
+			tyres: "Pirelli",
+		},
+	]
 
+	//Get Drivers
 	useEffect(() => {
 		fetch("http://ergast.com/api/f1/current/drivers.json")
 			.then((res) => res.json())
@@ -231,6 +440,17 @@ function App() {
 				setDriversList(drivers)
 			})
 	}, [])
+
+	//Set F1 Data
+	useEffect(() => {
+		setF1Data((prevState) => {
+			return {
+				...prevState,
+				constructors: TEMPCONSTRUCTORS,
+				drivers: DriverData,
+			}
+		})
+	}, [DriverData])
 
 	return (
 		<div className='App'>
@@ -241,12 +461,17 @@ function App() {
 					<Route
 						path='teams'
 						element={
-							<Teams photos={teamPhotos} constructors={constructorData} />
+							<Teams
+								photos={photos}
+								constructors={F1Data && F1Data.constructors}
+							/>
 						}
 					/>
 					<Route
 						path='drivers'
-						element={<Drivers photos={driverPhotos} drivers={driversList} />}
+						element={
+							<Drivers photos={photos} drivers={F1Data && F1Data.drivers} />
+						}
 					/>
 					<Route
 						path='standings'
@@ -256,7 +481,7 @@ function App() {
 								results={raceWeekendData && raceWeekendData}
 								selectedRaceWeekend={selectedRaceWeekend}
 								session={selectedSession}
-								photos={driverPhotos}
+								photos={photos}
 							/>
 						}
 					/>

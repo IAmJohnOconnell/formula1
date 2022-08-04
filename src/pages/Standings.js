@@ -22,19 +22,19 @@ const Standings = ({
 				{postRaceDriverStandings &&
 					postRaceDriverStandings.map((result) => {
 						let driver = result.Driver
+						let driverTeaminfo = result.Constructors[0]
 						let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
 						let driverphoto = `${driver.givenName}${driver.familyName}`
 							.toLowerCase()
 							.normalize("NFD")
 							.replace(/[\u0300-\u036f]/g, "")
-						let team = result.Constructors[0]
 
 						return (
 							<Card
 								key={result.position}
 								text={driverName}
-								photo={photos[driverphoto]}
-								team={team}
+								photo={photos.driver[driverphoto]}
+								team={driverTeaminfo}
 								number={result.position}
 							/>
 						)

@@ -49,7 +49,6 @@ const NavContainer = styled.nav`
 `
 
 const Nav = ({ isVisible }) => {
-	console.log()
 	return (
 		<NavContainer>
 			<div>
