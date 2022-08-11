@@ -6,7 +6,8 @@ const StyledCard = styled.div`
 	flex-direction: column;
 	padding-top: 1rem;
 	padding-inline: 1rem;
-	box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 -2px 0 hsla(0 0% 100% / 15%), 0px 0px 4px hsla(0 0% 0% / 50%);
+
 	background-color: #33363d;
 	border-radius: 10px;
 	overflow: hidden;

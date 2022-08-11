@@ -92,7 +92,7 @@ function App() {
 	const [selectedSession, setSelectedSession] = useState("results")
 	const [selectedRaceWeekend, setSelectedRaceWeekend] = useState("last")
 	const [races, setRaces] = useState()
-	const [postRaceDriverStandings, setPostRaceDriverStandings] = useState()
+	const [driverStandings, setdriverStandings] = useState()
 	// const [allCircuitsData, setAllCircuitsData] = useState()
 	const { pathname } = useLocation()
 	// const [constructorData, setConstructorsData] = useState()
@@ -179,22 +179,19 @@ function App() {
 				setRaceWeekendData(formattedRaceWeekendData)
 			})
 
-		//Get postRaceDriverStandings
-		fetch(
-			`http://ergast.com/api/f1/current/${selectedRaceWeekend}/driverStandings.json`
-		)
+		fetch(`http://ergast.com/api/f1/current/driverStandings.json`)
 			.then((res) => res.json())
 			.then((data) => {
-				let postRaceDriverStandingsResults =
+				let driverStandingsResults =
 					data.MRData.StandingsTable.StandingsLists[0].DriverStandings
-				setPostRaceDriverStandings(postRaceDriverStandingsResults)
+				setdriverStandings(driverStandingsResults)
 			})
 	}, [selectedSession, selectedRaceWeekend])
 
 	useEffect(() => {
-		let testDriverData = []
-		postRaceDriverStandings &&
-			postRaceDriverStandings.map((result) => {
+		let driverDataArr = []
+		driverStandings &&
+			driverStandings.map((result) => {
 				let driver = result.Driver
 				// let driverName = `${driver.givenName.normalize()} ${driver.familyName.normalize()}`
 				let driverPhoto = `${driver.givenName}${driver.familyName}`
@@ -209,11 +206,11 @@ function App() {
 					team,
 				}
 
-				testDriverData.push(driverData)
+				driverDataArr.push(driverData)
 
-				return setDriverData(testDriverData)
+				return setDriverData(driverDataArr)
 			})
-	}, [postRaceDriverStandings])
+	}, [driverStandings])
 
 	//Get Circuit Data
 	// useEffect(() => {
@@ -477,10 +474,10 @@ function App() {
 						path='standings'
 						element={
 							<Standings
-								postRaceDriverStandings={postRaceDriverStandings}
-								results={raceWeekendData && raceWeekendData}
-								selectedRaceWeekend={selectedRaceWeekend}
-								session={selectedSession}
+								driverStandings={driverStandings}
+								// results={raceWeekendData && raceWeekendData}
+								// selectedRaceWeekend={selectedRaceWeekend}
+								// session={selectedSession}
 								photos={photos}
 							/>
 						}

@@ -24,7 +24,7 @@ const RaceTimeSheet = ({ results, session }) => {
 				</thead>
 				<tbody>
 					{results &&
-						results.Results.map((result) => {
+						results.map((result) => {
 							let driverFullName = `${result.Driver.givenName} ${result.Driver.familyName}`
 							return (
 								<tr className={styles.timingListRow} key={result.position}>
@@ -37,7 +37,7 @@ const RaceTimeSheet = ({ results, session }) => {
 									</td>
 
 									<td>{result.points}</td>
-									<td>{result.Constructor.name}</td>
+									{/* <td>{result.Constructor.name}</td> */}
 								</tr>
 							)
 						})}
