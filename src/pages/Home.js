@@ -1,208 +1,197 @@
-import React from "react"
-import styled from "styled-components"
-import UpNext from "../components/UpNext"
-import { Routes, Route, Link } from "react-router-dom"
-import ChampionshipLeaderCard from "../components/ChampionshipLeaderCard"
-import MVerstappen from "../assets/drivers/maxverstappen.png"
-import RedBull_Logo from "../assets/teams/redbull_logo.png"
+import React from "react";
+import styled from "styled-components";
+import Nav from "../components/Nav";
+import whiteRedBull3 from "../assets/generalPhotos/whiteRedBull3.jpeg";
+import { Link } from "react-router-dom";
 
-const StyledHome = styled.div``
+const StyledHome = styled.div`
+  .bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
 
-const Greeting = styled.div`
-	color: white;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.6) 70%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
 
-	h1 {
-		text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-	}
-
-	span {
-		color: #7889b3;
-	}
-`
-const Date = styled.p`
-	color: #e10600;
-	padding-top: 4px;
-	text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-	font-size: 14px;
-`
-
-const Intro = styled.p`
-	color: #919bb3;
-	padding-top: 2em;
-	font-weight: normal;
-	font-size: 1.5em;
-	max-width: 55ch;
-`
+    z-index: -1;
+  }
+`;
 
 const Header = styled.div`
-	display: flex;
-	justify-content: space-between;
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2rem;
+  width: 100%;
 
-const HomeNav = styled.div`
-	display: grid;
-	grid-template-areas:
-		"one two"
-		"three four"
-		"five five";
-	padding-top: 2em;
-	gap: 1em;
-	width: 100%;
+  h1 {
+    margin-bottom: 0;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.95);
+    font-family: "Formula1";
+    font-size: clamp(1.5rem, 4.5vw, 3.5rem);
+    color: #ff1e00;
+    color: white;
 
-	a {
-		border: 1px solid #7889b3;
-		border-radius: 10px;
-		color: #f1f1f1;
-		font-weight: bold;
-		text-decoration: none;
-		text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-		text-transform: uppercase;
-		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-		width: 100%;
-		height: 125px;
-	}
+    @media screen and (max-width: 500px) {
+      margin: 0 auto;
+      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
 
-	a:hover {
-		border: 1px solid #e10600;
-	}
+  h2 {
+    color: white;
+    font-family: "formula1";
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.95);
+    margin: 1rem 2rem;
+    max-width: 30ch;
 
-	a:active {
-		background-color: #e10600;
-	}
+    @media (max-width: 768px) {
+      text-align: center;
+      margin: 1rem auto;
+      padding-inline: 2rem;
+    }
 
-	p {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 125px;
-	}
+    @media screen and (max-width: 500px) {
+      text-align: center;
+      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
 
-	a:nth-child(1) {
-		grid-area: one;
-		border: 1px solid #e10600;
-		background: #e10600;
-	}
-	a:nth-child(2) {
-		grid-area: two;
-	}
-	a:nth-child(3) {
-		grid-area: three;
-	}
-	a:nth-child(4) {
-		grid-area: four;
-	}
-	a:nth-child(5) {
-		grid-area: five;
-	}
+  .ctaContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 2rem;
+    gap: 1rem;
 
-	@media screen and (min-width: 600px) {
-		grid-template-areas: "one two three four five";
-	}
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
 
-	@media screen and (min-width: 900px) {
-		max-width: 100%;
-	}
+    @media (max-width: 500px) {
+      flex-wrap: wrap;
+      gap: 3rem;
+      padding-inline: 0.5rem;
+      justify-content: center;
+    }
+  }
 
-	@media screen and (min-width: 1200px) {
-		max-width: 55%;
-	}
-`
+  .buttonContainer {
+    display: flex;
+    gap: 1rem;
+  }
 
-const SectionLabel = styled.p`
-	text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-	font-size: 24px;
-	color: #f1f1f1;
-`
+  @media screen and (max-width: 500px) {
+    margin-top: 50%;
+  }
+`;
 
-const Section = styled.div`
-	padding-top: 4em;
-`
+const Cta = styled.button`
+  padding: 1rem;
+  color: white;
+  border-radius: 4px;
+  background-color: #ff1e00;
+  border: none;
+  font-family: formula1-bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 
-const ChampionshipLeadersSection = styled(Section)`
-	display: flex;
-	flex-direction: column;
-`
-const ChampionshipLeadersContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+  &:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid #ff1e00;
+    transform: scale(1.05);
+  }
 
-	@media screen and (min-width: 600px) {
-		flex-direction: row;
-		gap: 3em;
-		justify-content: space-between;
-	}
+  &:active {
+    transform: scale(0.98);
+  }
 
-	@media screen and (min-width: 900px) {
-		max-width: 100%;
-	}
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 0.8rem;
+  }
+`;
 
-	@media screen and (min-width: 1200px) {
-		max-width: 55%;
-	}
-`
+const Footer = styled.footer`
+  position: fixed;
+  bottom: 0;
+  padding-top: 1rem;
+  padding-left: 2rem;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  background: #131313;
+  width: 100%;
 
-const MutedLabel = styled.p`
-	color: #919bb3;
-	text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.35);
-`
+  h1 {
+    font-family: "Formula1-wide";
+    font-size: clamp(1.2rem, 1.5vw, 2rem);
+    color: white;
+
+    @media screen and (max-width: 500px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  h2 {
+    font-family: "formula1";
+    font-size: clamp(1rem, 1vw, 1.5rem;);
+    margin: 1rem 0;
+    color: #ff1e00;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding-left: 1rem;
+    display: none;
+  }
+`;
 
 const Home = () => {
-	return (
-		<StyledHome>
-			<Header>
-				<Greeting>
-					<h1>
-						<span>Welcome,</span> Race Fan
-					</h1>
-					<Date>Jul 19, 2022</Date>
-					<Intro>
-						This is your dashboard. Use the buttons below to find more
-						information about the current Formula 2 season and its competitors.
-					</Intro>
-				</Greeting>
-				<UpNext />
-			</Header>
-			<Section>
-				<SectionLabel>Navigation</SectionLabel>
-				<HomeNav>
-					<Link to='/'>
-						<p>Home</p>
-					</Link>
-					<Link to='/teams'>
-						<p>Teams</p>
-					</Link>
-					<Link to='/drivers'>
-						<p>Drivers</p>
-					</Link>
-					<Link to='/standings'>
-						<p>Standings</p>
-					</Link>
-					<Link to='/results'>
-						<p>Results</p>
-					</Link>
-				</HomeNav>
-			</Section>
-			<Section>
-				<SectionLabel>Championship Leaders</SectionLabel>
-				<ChampionshipLeadersContainer>
-					<ChampionshipLeadersSection>
-						<MutedLabel>WDC</MutedLabel>
-						<ChampionshipLeaderCard
-							name='Max Verstappen'
-							photo={MVerstappen}></ChampionshipLeaderCard>
-					</ChampionshipLeadersSection>
-					<ChampionshipLeadersSection>
-						<MutedLabel>Constructors</MutedLabel>
-						<ChampionshipLeaderCard
-							name='Red Bull'
-							photo={RedBull_Logo}></ChampionshipLeaderCard>
-					</ChampionshipLeadersSection>
-				</ChampionshipLeadersContainer>
-			</Section>
-		</StyledHome>
-	)
-}
+  return (
+    <StyledHome>
+      <Nav className="navContainer" />
+      <Header>
+        <div className="ctaContainer">
+          <h1>Experience Speed</h1>
+          <div className="buttonContainer">
+            <Link to="/results">
+              <Cta>Race Results</Cta>
+            </Link>
+            <Link to="/standings">
+              <Cta>View Standings</Cta>
+            </Link>
+          </div>
+        </div>
+        <h2>
+          Stay updated with race results, standings, and info about the teams
+          and drivers.
+        </h2>
+      </Header>
+      <img src={whiteRedBull3} alt="f1" className="bg-img" />
+      <Footer>
+        <h1>Formula 1 Hub</h1>
+        <h2>Your Pit Stop for All Things F1</h2>
+      </Footer>
+    </StyledHome>
+  );
+};
 
-export default Home
+export default Home;

@@ -1,68 +1,81 @@
-import React from "react"
-import styled from "styled-components"
-import Card from "../components/Card"
-import SectionHeader from "../components/SectionHeader"
+import React from "react";
+import styled from "styled-components";
+import TeamCard from "../components/TeamCard";
+import SectionHeader from "../components/SectionHeader";
+import { Link } from "react-router-dom";
+import PageContainer from "../components/PageContainer";
+import { getPhotos, getYear } from "../services/utilitiesService";
 
 const TeamsPage = styled.div`
-	h1 {
-		font-size: 2rem;
-		color: white;
-	}
+  max-width: 1300px;
+  padding-inline: 2rem;
+  padding-bottom: 2rem;
+  margin: auto;
 
-	h2 {
-		max-width: 55ch;
-		padding-top: 1.5rem;
-		color: #919bb3;
-		font-size: 1.5rem;
-		font-weight: normal;
-	}
-`
+  a:link {
+    text-decoration: none;
+  }
 
-const PageContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-auto-flow: row;
-	max-width: 100%;
-	width: 100%;
-	gap: 2em;
+  @media (max-width: 500px) {
+    padding: 0.5rem;
+  }
+`;
 
-	@media screen and (min-width: 600px) {
-		grid-template-columns: repeat(2, 1fr);
-	}
+const Teams = ({ constructors }) => {
+  const photos = getPhotos();
 
-	@media screen and (min-width: 900px) {
-		grid-template-columns: repeat(3, 1fr);
-	}
+  return (
+    <TeamsPage>
+      <SectionHeader
+        title={`F1 Teams ${getYear()}`}
+        subtitle={"Check out the teams competing for the top spot."}
+      />
+      <PageContainer>
+        {constructors &&
+          constructors.map((constructor) => {
+            let constructorData = {};
 
-	@media screen and (min-width: 1200px) {
-	}
-`
+            let constructorCar =
+              constructor.Constructor.name.split(" ").join("") + "_car";
+            constructorCar = constructorCar.split("-").join("");
+            constructorCar = constructorCar
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
 
-const Teams = ({ photos, constructors }) => {
-	return (
-		<TeamsPage>
-			<SectionHeader
-				title={"F1 Teams 2022"}
-				subtitle={"Check out the teams competing for the top spot."}
-			/>
-			<PageContainer>
-				{constructors.map((constructor) => {
-					let constructorPhoto = constructor.name.split(" ").join("")
+            let constructorLogo = constructor.Constructor.name
+              .split(" ")
+              .join("");
+            constructorLogo = constructorLogo.split("-").join("");
+            constructorLogo = constructorLogo
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
 
-					constructorPhoto = constructorPhoto.split("-").join("")
+            constructorData.name = constructor.Constructor.name;
+            constructorData.car = photos.car[constructorCar];
+            constructorData.logo = photos.team[constructorLogo];
+            constructorData.constructorProfile = constructor;
 
-					return (
-						<Card
-							text={constructor.name}
-							photo={photos.team[constructorPhoto]}
-							key={constructor.id}
-							type='teams'
-						/>
-					)
-				})}
-			</PageContainer>
-		</TeamsPage>
-	)
-}
+            return (
+              <Link
+                to={`/teams/${constructor.constructorId}`}
+                key={constructor.constructorId}
+                state={constructorData}
+              >
+                <TeamCard
+                  constructorData={constructorData}
+                  photo={photos.car[constructorCar]}
+                  logo={photos.team[constructorLogo]}
+                  // key={constructor.id}
+                  type="teams"
+                />
+              </Link>
+            );
+          })}
+      </PageContainer>
+    </TeamsPage>
+  );
+};
 
-export default Teams
+export default Teams;
