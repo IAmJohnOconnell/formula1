@@ -31,7 +31,7 @@ let constructorProfileData = {
     worldChampionships: "6",
     drivers: [
       { name: "Max Verstappen", number: "1" },
-      { name: "Liam Lawson", number: "30" },
+      { name: "Yuki Tsunoda", number: "22" },
     ],
   },
   mclaren: {
@@ -87,7 +87,7 @@ let constructorProfileData = {
     worldChampionships: "2",
     drivers: [
       { name: "Pierre Gasly", number: "10" },
-      { name: "Jack Doohan", number: "7" },
+      { name: "Franco Colapinto", number: "43" },
     ],
   },
   racingbulls: {
@@ -101,7 +101,7 @@ let constructorProfileData = {
     worldChampionships: "0",
     drivers: [
       { name: "Isack Hadjar", number: "6" },
-      { name: "Yuki Tsunoda", number: "22" },
+      { name: "Liam Lawson", number: "30" },
     ],
   },
   sauber: {

@@ -94,7 +94,7 @@ import isackhadjar from "../assets/drivers/isackhadjar.avif";
 import gabrielbortoleto from "../assets/drivers/gabrielbortoleto.avif";
 import andreakimiantonelli from "../assets/drivers/andreakimiantonelli.avif";
 import oliverbearman from "../assets/drivers/oliverbearman.avif";
-import jackdoohan from "../assets/drivers/jackdoohan.avif";
+import francocolapinto from "../assets/drivers/francocolapinto.avif";
 
 //Driver Profile Photos
 import albon from "../assets/profilePhotos/albon.avif";
@@ -102,7 +102,7 @@ import alonso from "../assets/profilePhotos/alonso.avif";
 import antonelli from "../assets/profilePhotos/antonelli.avif";
 import bearman from "../assets/profilePhotos/bearman.avif";
 import bortoleto from "../assets/profilePhotos/bortoleto.avif";
-import doohan from "../assets/profilePhotos/doohan.avif";
+import colapinto from "../assets/profilePhotos/colapinto.avif";
 import gasly from "../assets/profilePhotos/gasly.avif";
 import hadjar from "../assets/profilePhotos/hadjar.avif";
 import hamilton from "../assets/profilePhotos/hamilton.avif";
@@ -120,6 +120,7 @@ import verstappen from "../assets/profilePhotos/verstappen.avif";
 
 //Nationality Flags
 import australia_flag from "../assets/flags/Australia.avif";
+import argentina_flag from "../assets/flags/Argentina.avif";
 import bahrain_flag from "../assets/flags/Bahrain.avif";
 import china_flag from "../assets/flags/China.avif";
 import netherlands_flag from "../assets/flags/Netherlands.avif";
@@ -153,6 +154,7 @@ const createDriverFlagMap = (photos) => {
   }
 
   return {
+    Argentine: photos.flag.argentina_flag,
     Thai: photos.flag.thailand_flag,
     Brazilian: photos.flag.brazil_flag,
     Canadian: photos.flag.canada_flag,
@@ -398,7 +400,7 @@ export const getPhotos = () => {
       gabrielbortoleto,
       andreakimiantonelli,
       oliverbearman,
-      jackdoohan,
+      francocolapinto,
     },
 
     driverProfile: {
@@ -407,7 +409,7 @@ export const getPhotos = () => {
       Antonelli: antonelli,
       Bearman: bearman,
       Bortoleto: bortoleto,
-      Doohan: doohan,
+      Colapinto: colapinto,
       Gasly: gasly,
       Hadjar: hadjar,
       Hamilton: hamilton,
@@ -505,6 +507,7 @@ export const getPhotos = () => {
     },
 
     flag: {
+      argentina_flag,
       australia_flag,
       bahrain_flag,
       china_flag,
@@ -1064,15 +1067,6 @@ Of all the places for it to unfold, Singapore triggered a second twist of fate. 
 It marked a golden opportunity for Lawson to not only cement himself in RB colours, but also knock on the door of a Red Bull promotion - which is exactly what he got, when he was announced as Sergio Perez's replacement as Max Verstappen's team mate for 2025.
 
 It's been a whirlwind F1 career to date and only time will tell where the adventure takes Lawson next.`,
-    doohan: `Alpine’s F1 reserve since 2023, Jack Doohan steps up to full-time racer for 2025, having been handed an early Grand Prix debut for the team at 2024’s season finale.
-
-Doohan is the latest Aussie to join the F1 grid, and the young Queenslander is not short of racing pedigree – he already has plenty of F3 and F2 wins to his name, and that’s before we mention his father, five-time motorcycle world champion, Mick.
-
-After his single-seater debut in British Formula 4, followed by stints in Italian F4, ADAC F4 and Asian F3, Doohan stepped up to FIA Formula 3 in 2020, finishing championship runner-up the following year.
-
-The 2022 season saw him join Alpine’s driver development programme and finish sixth overall in his rookie FIA Formula 2 campaign. The following year he was up to third, thanks to three race wins, including impressive back-to-back feature race victories in Hungary and Belgium.
-
-Formula 1 experience came via Alpine, with free practice outings at Grands Prix in 2022, 2023 and 2024. And having served his apprenticeship with the French squad, Doohan’s reward is a shot at the big time as team mate to F1 race winner Pierre Gasly.`,
     bortoleto: `Gabriel Bortoleto will carry the hopes of a nation during his debut F1 season, with the reigning F2 champion becoming the first Brazilian to compete in the sport full-time since Felipe Massa in 2017.
 
 Born in Sao Paulo, Bortoleto started karting aged seven and was soon winning local championships – his businessman father Lincoln Oliveira, who is involved in Brazilian motor racing, providing valuable support.
@@ -1099,6 +1093,11 @@ A serial record breaker in his early days, he was – at one time – F1’s you
 But after two years away from Formula 1 racing – and with two Le Mans wins in his pocket – Alonso returned with Alpine in 2021. His speed and determination undiminished, he was back on the podium that year, but frustrated by poor reliability – and the lack of a long-term contract – the following season, he opted to jump ship once more.
 
 After eight podiums in his first season with Aston Martin, he has since become the first man to reach 400 Grand Prix starts. And with tech legend Adrian Newey joining in 2025, Alonso now hopes it will be with the team in green that he finally returns to winning ways, as he has unfinished business with F1…`,
+    colapinto: `He may have only contested a handful of Grands Prix, but Alpine racer Franco Colapinto has already made quite a name for himself in Formula 1, having not once but twice been drafted in mid-season to replace a struggling team mate.
+At the end of August 2024, Williams announced that their academy driver and then F2 racer Colapinto would contest the remainder of the 2024 season with the squad, replacing Logan Sargeant as Alex Albon’s team mate.
+A race winner in an array of categories on the junior single-seater scene, Colapinto had joined the Williams Racing Driver Academy in early 2023 and made his FP1 debut with the F1 team at last year’s British Grand Prix – giving him an initial taste of the FW46.
+On his subsequent race debut at Monza, he became the first Argentine driver in F1 for 23 years, after Gaston Mazzacane’s last appearances for Prost back in 2001, and only the second Argentine to drive for Williams, following on from his countryman Carlos Reutemann.
+Despite his obvious speed, Williams' signing of Carlos Sainz meant Colapinto was left without a full-time seat for 2025 and swapped to Alpine as reserve. But he didn’t have to wait long to be back on the grid, replacing rookie Jack Doohan for at least five Grands Prix from round seven onwards.`,
   };
 
   return bios[driverName];

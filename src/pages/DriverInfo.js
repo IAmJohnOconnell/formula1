@@ -7,7 +7,6 @@ import alonsoHelmet from "../assets/helmets/alonso.avif";
 import antonelliHelmet from "../assets/helmets/antonelli.avif";
 import bearmanHelmet from "../assets/helmets/bearman.avif";
 import bortoletoHelmet from "../assets/helmets/bortoleto.avif";
-import doohanHelmet from "../assets/helmets/doohan.avif";
 import gaslyHelmet from "../assets/helmets/gasly.avif";
 import hadjarHelmet from "../assets/helmets/hadjar.avif";
 import hamiltonHelmet from "../assets/helmets/hamilton.avif";
@@ -29,7 +28,6 @@ const driverHelmetPhotos = {
   Antonelli: antonelliHelmet,
   Bearman: bearmanHelmet,
   Bortoleto: bortoletoHelmet,
-  Doohan: doohanHelmet,
   Gasly: gaslyHelmet,
   Hadjar: hadjarHelmet,
   Hamilton: hamiltonHelmet,
@@ -178,17 +176,19 @@ const DriverInfo = () => {
           </div>
           <div className="teamName">{driver.Constructors[0].name}</div>
         </div>
-        <DriverHelmetImage>
-          <picture>
-            <source type="image/avif" srcSet={driverHelmetPhoto} />
-            <img
-              src={driverHelmetPhoto}
-              alt={`${driver.Driver.givenName} ${removeDiacritics(
-                driver.Driver.familyName
-              )}`}
-            ></img>
-          </picture>
-        </DriverHelmetImage>
+        {driverHelmetPhoto && (
+          <DriverHelmetImage>
+            <picture>
+              <source type="image/avif" srcSet={driverHelmetPhoto} />
+              <img
+                src={driverHelmetPhoto}
+                alt={`${driver.Driver.givenName} ${removeDiacritics(
+                  driver.Driver.familyName
+                )}`}
+              ></img>
+            </picture>
+          </DriverHelmetImage>
+        )}
       </DriverHeader>
       <div className="driverProfile">
         <picture>

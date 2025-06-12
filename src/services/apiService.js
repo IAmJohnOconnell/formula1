@@ -38,16 +38,49 @@ export const fetchConstructorStandings = async () => {
 
 export const fetchRaceResults = async () => {
   try {
-    const response = await fetch(`${baseURL}/results/?format=json`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch race results");
+    console.log("Fetching all race results...");
+
+    const countResponse = await fetch(
+      `${baseURL}/results/?format=json&limit=1`
+    );
+    const countData = await countResponse.json();
+    const total = parseInt(countData.MRData.total);
+
+    const pageSize = 100;
+    const pages = Math.ceil(total / pageSize);
+
+    let allRaces = [];
+
+    for (let i = 0; i < pages; i++) {
+      const offset = i * pageSize;
+      console.log(`Fetching page ${i + 1}/${pages} (offset: ${offset})`);
+
+      const response = await fetch(
+        `${baseURL}/results/?format=json&limit=${pageSize}&offset=${offset}`
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`API error on page ${i + 1}:`, errorText);
+        throw new Error(`Failed to fetch race results: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.MRData?.RaceTable?.Races) {
+        console.error("Unexpected API response format:", data);
+        throw new Error("Invalid API response format");
+      }
+
+      // Add this page's races to our collection
+      allRaces = [...allRaces, ...data.MRData.RaceTable.Races];
     }
 
-    let data = await response.json();
-    data = data.MRData.RaceTable.Races;
-    return data;
+    console.log(`Successfully fetched all ${allRaces.length} races`);
+    return allRaces;
   } catch (error) {
-    console.log("Failed to race result data", error);
+    console.error("Error fetching race results:", error);
+    throw error;
   }
 };
 

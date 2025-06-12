@@ -8,7 +8,6 @@ import alonso from "../assets/profilePhotos/alonso.avif";
 import antonelli from "../assets/profilePhotos/antonelli.avif";
 import bearman from "../assets/profilePhotos/bearman.avif";
 import bortoleto from "../assets/profilePhotos/bortoleto.avif";
-import doohan from "../assets/profilePhotos/doohan.avif";
 import gasly from "../assets/profilePhotos/gasly.avif";
 import hadjar from "../assets/profilePhotos/hadjar.avif";
 import hamilton from "../assets/profilePhotos/hamilton.avif";
@@ -23,6 +22,7 @@ import sainz from "../assets/profilePhotos/sainz.avif";
 import stroll from "../assets/profilePhotos/stroll.avif";
 import tsunoda from "../assets/profilePhotos/tsunoda.avif";
 import verstappen from "../assets/profilePhotos/verstappen.avif";
+import colapinto from "../assets/profilePhotos/colapinto.avif";
 
 const driverProfilePhotos = {
   Albon: albon,
@@ -30,7 +30,7 @@ const driverProfilePhotos = {
   Antonelli: antonelli,
   Bearman: bearman,
   Bortoleto: bortoleto,
-  Doohan: doohan,
+  Colapinto: colapinto,
   Gasly: gasly,
   Hadjar: hadjar,
   Hamilton: hamilton,
