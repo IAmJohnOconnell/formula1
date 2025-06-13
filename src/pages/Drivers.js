@@ -8,6 +8,7 @@ import {
   getDriverFlag,
   getYear,
   getPhotos,
+  removeExcludedDrivers,
 } from "../services/utilitiesService";
 
 const DriversPage = styled.div`
@@ -31,7 +32,7 @@ const removeDiacritics = (str) => {
 
 const Drivers = ({ drivers }) => {
   const photos = getPhotos();
-
+  let validDrivers = removeExcludedDrivers(drivers, true);
   return (
     <DriversPage>
       <SectionHeader
@@ -40,7 +41,7 @@ const Drivers = ({ drivers }) => {
       />
       <PageContainer>
         {drivers &&
-          drivers.map((driver) => {
+          validDrivers.map((driver) => {
             let driverphoto = `${driver.Driver.givenName.split(" ").join("")}${
               driver.Driver.familyName
             }`

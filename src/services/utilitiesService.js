@@ -1102,3 +1102,26 @@ Despite his obvious speed, Williams' signing of Carlos Sainz meant Colapinto was
 
   return bios[driverName];
 };
+
+export const removeExcludedDrivers = (driverData, logDrivers = false) => {
+  const excludedDrivers = {
+    doohan: {
+      driverId: "doohan",
+      reason: "replaced by team mid-season",
+    },
+  };
+
+  driverData =
+    driverData &&
+    driverData.filter(
+      (driver) => driver.Driver.driverId !== excludedDrivers.doohan.driverId
+    );
+
+  if (logDrivers) {
+    console.log(
+      `Drivers Excluded: ${excludedDrivers.doohan.driverId} Reason: ${excludedDrivers.doohan.reason}`
+    );
+  }
+
+  return driverData;
+};

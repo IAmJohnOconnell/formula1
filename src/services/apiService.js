@@ -38,8 +38,6 @@ export const fetchConstructorStandings = async () => {
 
 export const fetchRaceResults = async () => {
   try {
-    console.log("Fetching all race results...");
-
     const countResponse = await fetch(
       `${baseURL}/results/?format=json&limit=1`
     );
@@ -53,7 +51,7 @@ export const fetchRaceResults = async () => {
 
     for (let i = 0; i < pages; i++) {
       const offset = i * pageSize;
-      console.log(`Fetching page ${i + 1}/${pages} (offset: ${offset})`);
+      // console.log(`Fetching page ${i + 1}/${pages} (offset: ${offset})`);
 
       const response = await fetch(
         `${baseURL}/results/?format=json&limit=${pageSize}&offset=${offset}`
@@ -72,11 +70,9 @@ export const fetchRaceResults = async () => {
         throw new Error("Invalid API response format");
       }
 
-      // Add this page's races to our collection
       allRaces = [...allRaces, ...data.MRData.RaceTable.Races];
     }
 
-    console.log(`Successfully fetched all ${allRaces.length} races`);
     return allRaces;
   } catch (error) {
     console.error("Error fetching race results:", error);
